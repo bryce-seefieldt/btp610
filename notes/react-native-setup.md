@@ -19,7 +19,7 @@ ________________________________________
 After installing VSCode and NodeJS, create new React Native project using your operating system’s command line prompt application (Terminal, cmd.exe, Powershell.exe, ect)
 
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 Open your computer’s command line application
 
@@ -28,16 +28,16 @@ Open your computer’s command line application
 
 Using your keyboard UP and DOWN keys, select the Blank option and press ENTER
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 Follow the on-screen instructions and wait for it to complete.
 
 ●	You may be asked to install “create-expo-app”. If so, then type “y”, then press ENTER
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 ●	You may be asked to enter the name of your app. If so, type a name for your project, then press ENTER. In the example below, we choose the name “session01”
 
- ![alt text](image-3.png)
+ ![alt text](./images/image-3.png)
 
 ●	Wait for the process to complete.
 
@@ -117,7 +117,7 @@ ________________________________________
 Use this link to find the app:
 https://expo.dev/client
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
  
 
 
@@ -137,7 +137,7 @@ https://expo.dev/client
 ### Android Users:
 ●	Open the Expo Go App
 ●	Choose Scan QR Code
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
  
 
 
@@ -154,7 +154,7 @@ n open the app using Expo Go. If yes, allow it to open in Expo Go.
 
 If you see these messages, press “x” to dismiss the popups
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 Eventually, you will see the project output
 
