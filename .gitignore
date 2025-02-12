@@ -167,5 +167,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-*:Zone-Identifier
-*:shield
+*Zone.Identifier
+*shield
