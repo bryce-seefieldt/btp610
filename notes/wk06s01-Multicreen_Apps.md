@@ -211,6 +211,8 @@ const {userid} = route.params;
 ```
 
 
+
+
 ##### Example: Send Data to the Next Screen
  
 In the navigation.navigate() function, provide a Javascript object containing the data to send to next screen
@@ -274,6 +276,7 @@ DEBUG: What is in route?
  "path": undefined
 }
 ```
+
 To access only the data you sent, use `route.params`:
 ```js
 import { StyleSheet, Text, View, Button } from 'react-native';
@@ -327,7 +330,7 @@ navigation.navigate("Profile ABCD",
 )
 
 
-Screen 2.js
+// Screen 2.js
 
 
 <FlatList style={{marginVertical:70, borderWidth:1}}
@@ -342,7 +345,345 @@ Screen 2.js
            }
         />
 
- 
+```js
+// Screen2.js
 
+import { StyleSheet, Text, View, Button } from 'react-native';
+
+// navigation is a prop that is included on every screen in teh Stack
+// it comes from React Navigation library
+// Contain functions and variables that help you do navigation
+const Screen2 = ({navigation}) => {
+  const buttonPressed = () => {
+     console.log("Going to next screen...")
+     // specify the name / route of the screen you want to move to
+     navigation.navigate("Pqr", {x:25, y:true, z:"snoop dogg", a:[25, 30, 100]})
+
+  }
+  const buttonPressed2 = () => {     
+     navigation.navigate("MMM")
+  }
+  return(
+     <View style={styles.container}>
+        <Text>Here is the Screen #2</Text>
+        <Button title="Go to next screen" onPress={buttonPressed}/>
+        <Button title="Login to the app" onPress={buttonPressed2}/>
+     </View>
+  )
+}
+const styles = StyleSheet.create({
+  container: {
+     flex: 1,
+     backgroundColor: '#fff',
+  },
+});
+
+
+export default Screen2
+```
+---
+```js
+// Screen3.js
+
+import { StyleSheet, Text, View } from 'react-native';
+
+const Screen3 = ({route}) => {
+
+  console.log("DEBUG: what is in route")
+  console.log(route)
+
+  console.log("DEBUG: key")
+  console.log(route.key) // Pqr-nWcw-A9H8suXF3LAVcrfb
+  console.log("DEBUG: path")
+  console.log(route.path) // undefined
+  console.log("DEBUG: name")
+  console.log(route.name)    // pqr
+  console.log("DEBUG: param")
+  console.log(route.params) // the data from the prev creen
+
+  // {"a": [25, 30, 100], "x": 25, "y": true, "z": "snoop dogg"}
+
+  return(
+     <View style={styles.container}>
+       <Text>Here is the Screen #3</Text>
+       <Text>Who wins the rap battle between KL and DD? {route.params.z}</Text>
+       <Text>What is a[0]? {route.params.a[0]}</Text>
+       <Text>What is x? {route.params.x}</Text>
+       {
+        (route.params.y === true) ? <Text>Y is TRUE</Text> : <Text>Y is FALSE!</Text>
+       }
+     </View>
+  )
+}
+const styles = StyleSheet.create({
+  container: {
+     flex: 1,
+     backgroundColor: '#fff',
+  },
+});
+
+export default Screen3
+ 
+```
+---
+
+##### Installation:
+
+```sh
+npm install @react-navigation/bottom-tabs
+```
+
+##### Code example: Converting your App.js to use a Tab Navigator instead of a stack:
+
+```js
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// import your actual screens
+import Screen2 from "./Screen2"
+import Screen3 from "./Screen3"
+import LoginScreen from './LoginScreen';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+ return (
+   <NavigationContainer>
+     <Tab.Navigator initialRouteName="Abc">
+       <Tab.Screen component={LoginScreen}  name="MMM"/>
+       <Tab.Screen component={Screen2} name="Abc"/>      
+     </Tab.Navigator>
+   </NavigationContainer>
+ );
+}
+ const styles = StyleSheet.create({
+ container: {
+   flex: 1,
+   backgroundColor: '#fff',
+   alignItems: 'center',
+   justifyContent: 'center',
+ },
+});
+```
+---   
+
+##### Customizing the appearance of the header:
+
+```js
+screenOptions={() => ({           
+headerTintColor:"magenta",
+headerStyle:{backgroundColor:"yellow"}
+})}
+```
+---
+
+##### Paste: - replace your App() function with this code
+
+```js
+export default function App() {
+ return (
+   <NavigationContainer>      
+     {/* tells your app that we have a multiscreen app
+     screens will be connected using the stack pattern  */}
+     <Tab.Navigator
+       initialRouteName="Abc"
+       screenOptions={() => ({          
+         headerTintColor:"magenta",
+         headerStyle:{backgroundColor:"yellow"}
+         })}       
+     >
+       {/* here is a list of the screens that you want connected in a stack */}
+       {/* 1. name is used to "identify" the screen programatically (route)
+       2. this will get displayed at the top of your screen
+       3. It can be used to set the initial screen of the app */}
+       <Tab.Screen component={LoginScreen}  name="MMM"/>
+       <Tab.Screen component={Screen2} name="Abc"/>
+       <Tab.Screen component={Screen3} name="Pqr" />       
+     </Tab.Navigator>
+   </NavigationContainer>
+ );
+}  
+```
+---
+
+##### Remove the header
+
+```js
+headerShown:false
+```
+---
+
+
+##### Code: 
+
+```js 
+export default function App() {
+ return (
+   <NavigationContainer>
+     {/* tells your app that we have a multiscreen app
+     screens will be connected using the stack pattern  */}
+     <Tab.Navigator
+       initialRouteName="Abc"
+       screenOptions={() => ({          
+         headerShown:false
+       })}       
+     >
+       {/* here is a list of the screens that you want connected in a stack */}
+       {/* 1. name is used to "identify" the screen programatically (route)
+       2. this will get displayed at the top of your screen
+       3. It can be used to set the initial screen of the app */}
+       <Tab.Screen component={LoginScreen}  name="MMM"/>
+       <Tab.Screen component={Screen2} name="Abc"/>
+       <Tab.Screen component={Screen3} name="Pqr" />       
+     </Tab.Navigator>
+   </NavigationContainer>
+ );
+}
+```
+---
+
+##### Right click bar
+
+```js
+headerRight:() => {
+  return(
+            <View style={{flexDirection:"row", alignItems:"center"}}>               
+               <Text>Hello!</Text>
+            </View>
+         )
+}
+```
+---
+
+#####   Code:
+
+```js
+export default function App() {
+ return (
+   <NavigationContainer>
+     {/* tells your app that we have a multiscreen app
+     screens will be connected using the stack pattern  */}
+     <Tab.Navigator
+       initialRouteName="Abc"
+       screenOptions={() => ({          
+         headerRight:() => {
+           return(
+               <View style={{flexDirection:"row", alignItems:"center"}}>              
+                   <Text>Hello!</Text>
+               </View>
+           )
+         }
+        
+       })}       
+     >
+       {/* here is a list of the screens that you want connected in a stack */}
+       {/* 1. name is used to "identify" the screen programatically (route)
+       2. this will get displayed at the top of your screen
+       3. It can be used to set the initial screen of the app */}
+       <Tab.Screen component={LoginScreen}  name="MMM"/>
+       <Tab.Screen component={Screen2} name="Abc"/>
+       <Tab.Screen component={Screen3} name="Pqr" />       
+     </Tab.Navigator>
+   </NavigationContainer>
+ );
+}
+```   
+---
+
+##### Final code: 
+
+```js
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View , Button} from 'react-native';
+
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// import your actual screens
+import Screen2 from "./Screen2"
+import Screen3 from "./Screen3"
+import LoginScreen from './LoginScreen';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+ return (
+   <NavigationContainer>
+     {/* tells your app that we have a multiscreen app
+     screens will be connected using the stack pattern  */}
+     <Tab.Navigator
+       initialRouteName="Abc"
+       screenOptions={() => ({   
+         headerTintColor:"magenta",
+         headerStyle:{backgroundColor:"yellow"},      
+         headerRight:() => {
+           return(
+               <View style={{flexDirection:"row", alignItems:"center"}}>              
+                   <Text>Hello!</Text>
+                   <Text>Goodbye!</Text>
+               </View>
+           )
+         },
+         headerLeft:() => {
+           return(
+               <View style={{flexDirection:"row", alignItems:"center"}}>              
+                   <Button title="Button" onPress={()=>{ alert("boo!")}}/>
+               </View>
+           )
+         }
+        
+       })}       
+     >
+       {/* here is a list of the screens that you want connected in a stack */}
+       {/* 1. name is used to "identify" the screen programatically (route)
+       2. this will get displayed at the top of your screen
+       3. It can be used to set the initial screen of the app */}
+       <Tab.Screen component={LoginScreen}  name="MMM"/>
+       <Tab.Screen component={Screen2} name="Abc"/>
+       <Tab.Screen component={Screen3} name="Pqr" />       
+     </Tab.Navigator>
+   </NavigationContainer>
+ );
+}
+ const styles = StyleSheet.create({
+ container: {
+   flex: 1,
+   backgroundColor: '#fff',
+   alignItems: 'center',
+   justifyContent: 'center',
+ },
+});
+```
+---
+
+
+#### What is in route
+```
+ DEBUG: what is in route
+{"key": "Pqr-nWcw-A9H8suXF3LAVcrfb", "name": "Pqr", "params": {"a": [25, 30, 100], "x": 25, "y": true, "z": "snoop dogg"}, "path": undefined}
+Individual values
+
+ (NOBRIDGE) LOG  Going to next screen...
+ (NOBRIDGE) LOG  DEBUG: what is in route
+ (NOBRIDGE) LOG  {"key": "Pqr-Xmamz4iPpTuNeUoCqBbBh", "name": "Pqr", "params": {"a": [25, 30, 100], "x": 25, "y": true, "z": "snoop dogg"}, "path": undefined}
+ (NOBRIDGE) LOG  DEBUG: key
+ (NOBRIDGE) LOG  Pqr-Xmamz4iPpTuNeUoCqBbBh
+ (NOBRIDGE) LOG  DEBUG: path
+ (NOBRIDGE) LOG  undefined
+ (NOBRIDGE) LOG  DEBUG: name
+ (NOBRIDGE) LOG  Pqr
+ (NOBRIDGE) LOG  DEBUG: param
+ (NOBRIDGE) LOG  {"a": [25, 30, 100], "x": 25, "y": true, "z": "snoop dogg"}
+ 
+```
 
 
