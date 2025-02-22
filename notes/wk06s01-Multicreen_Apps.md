@@ -30,7 +30,7 @@ In mobile applications, there are typically two types of navigation patterns:
     - The user “flips” between screens
     - There is no concept of “forward” or “backwards”
 
-![alt text](image.png)
+![alt text](./images/wk6/image.png)
 [Image Credit](https://medium.com/@panktip85/react-navigation-stack-navigation-with-tab-navigation-25578d653632)
 
 Where To Get a Navigator Component?
@@ -39,7 +39,7 @@ The React Navigation plugin provides components, objects, and functions to imple
 
 Documentation:  https://reactnavigation.org/
 
-![alt text](image-1.png)
+![alt text](./images/wk6/./images/wk6/./images/wk6/image-1.png)
 
 
 ## How to use Multiscreen
@@ -62,7 +62,7 @@ Add a new Javascript file to the project.
 
 Add the word “Screen” to your filename to indicate that this component is a screen (not some other standalone component)
 
-![alt text](image-2.png)
+![alt text](./images/wk6/./images/wk6/./images/wk6/image-2.png)
 
 2. Add the boilerplate for a new component
 
@@ -119,7 +119,7 @@ export default Screen2
 3.  Put your screens in a folder
 
 As your application increases in complexity, consider putting your screens in their own folder:
-![alt text](image-3.png)
+![alt text](./images/wk6/./images/wk6/./images/wk6/image-3.png)
 
 
 ### Stack Navigation Code:
@@ -159,7 +159,7 @@ justifyContent: 'center',
 });
 ```
 #### Stack Navigation: Moving Between Screens
-![alt text](image-4.png)
+![alt text](./images/wk6/./images/wk6/image-4.png)
 
 1. In the starting screen’s function declaration, include the `{navigation}` prop.
 
