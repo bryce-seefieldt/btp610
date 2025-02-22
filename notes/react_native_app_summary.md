@@ -126,3 +126,36 @@
 - Inline styles for dynamic properties
 - Consistent naming conventions
 - Example: All example projects
+
+## Dependencies
+
+
+Here are the key dependencies used in the materials:
+
+### 1. Core Navigation Dependencies:
+```js
+npm install @react-navigation/native
+npx expo install react-native-screens react-native-safe-area-context
+npm install @react-navigation/stack
+npx expo install react-native-gesture-handler
+npm install @react-navigation/bottom-tabs
+```
+
+- `@react-navigation/native`: Core navigation library for React Native apps
+- `react-native-screens`: Provides native navigation screen containers
+- `react-native-safe-area-context`: Handles safe area insets for different devices
+- `@react-navigation/stack`: Enables stack-based navigation between screens
+- `react-native-gesture-handler`: Provides native-driven gesture management
+- `@react-navigation/bottom-tabs`: Implements bottom tab navigation
+
+### 2. Icon Libraries:
+```js
+npm install @expo/vector-icons
+```
+- Provides access to various icon sets through Expo
+
+### 3. Additional Expo Utilities:
+- Enables tunneling for Expo development
+```js
+npm install @expo/ngrok
+```
