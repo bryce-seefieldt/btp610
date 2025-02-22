@@ -1,4 +1,4 @@
-#BTP610 - Assignemnt 2
+#BTP610 - Assignment 2
 
 _**This assessment contains materials that may be subject to copyright and other intellectual property rights.
 Modification, distribution or reposting of this document is strictly prohibited. Learners found reposting this document or
@@ -22,14 +22,6 @@ For your submission to be graded, you must provide a zip file of your project an
 - When finished, zip the entire project and name the zip file RESTAURANT-FIRSTNAME.zip (replace firstname with your name)
 - Your finished zip file may be very large. Ensure you budget enough time to upload the zip file by the due date.
 - Submit your zip file to the dropbox.
-Academic Integrity
-- This is an individual assessment.
-- Permitted activities: Usage of Internet to search for syntax only; usage of course materials
-- Not permitted:
-- Following step-by-step tutorials
-- Posting assessments to homework help websites, such as Chegg or CourseHero
-- Discussion of solution or approaches with others; sharing/using a “reference” from someone
-- Using generative AI tools, such as ChatGPT, Copilot, etc
 
 ## Academic Integrity
 
@@ -46,7 +38,7 @@ This is an individual assessment.
 2. Usage of 3rd party UI frameworks is NOT permitted (example: React Paper, Material UI, etc)
 3. You must use function based components, not class based components
 4. Variables must be declared using let and const. No var declarations permitted.
-5. Functions should be declared using arrow function syntax, example: const abc = () => {}
+5. Functions should be declared using arrow function syntax, example: `const abc = () => {}`
 6. Implementation must follow techniques demonstrated in class.
 7. In addition to the required functionality, learners are expected to use the coding conventions demonstrated in class, meaningful variable naming, and clearly organized code. Comments are helpful but not required.
 
@@ -58,22 +50,29 @@ Using Expo + React Native, implement the application per the requirements below.
 ### Screen 1: Place an Order
 - Display an ordering screen. The user uses this screen to enter details about their order.
 - The ordering screen must display:
-    1a. Item name
-    1b. Item price   
-    1c. Item photo
-    1d. Form field to enter the quantity the user wants to purchase
-    1e. <Switch> form fields to enable user to choose from 2 different add ons. For example:
-        - Include utensils
-        - Delivery
-        
-        1e.1 You may choose any 2 add-ons that make sense for your restaurant item. For example, if you are selling bubble tea, then “including utensils” would not make sense; but an “upsize to large size” would.
+    
+1.1 Item name  
 
-        1e.2 If the user selects an add-on, an extra charge is added to the pre-tax cost of the order. For example, suppose delivery costs an additional 10.00 per order. If the user selects “delivery’, the app should add $10.00 to the order subtotal.
+1.2 Item price 
 
-        1e.3 You should display the price of each add-on. Ensure you use different amounts for each add on.
+1.3 Item photo 
 
-    1f. A button to submit the order
-    1g. A button to clear the order (pressing this button resets all form fields to their default values)
+1.4 Form field to enter the quantity the user wants to purchase 
+
+1.5 `<Switch>` form fields to enable user to choose from 2 different add ons. For example: 
+
+- Include utensils  
+- Delivery  
+
+    1.5.1 You may choose any 2 add-ons that make sense for your restaurant item. For example, if you are selling bubble tea, then “including utensils” would not make sense; but an “upsize to large size” would.
+
+    1.5.2 If the user selects an add-on, an extra charge is added to the pre-tax cost of the order. For example, suppose delivery costs an additional 10.00 per order. If the user selects “delivery’, the app should add $10.00 to the order subtotal.
+
+    1.5.3 You should display the price of each add-on. Ensure you use different amounts for each add on.
+
+1.6 A button to submit the order 
+
+1.7 A button to clear the order (pressing this button resets all form fields to their default values)
 
 #### Submitting an order
 - When the user submits the order, send the order details and navigate the user to the Receipt Screen.
