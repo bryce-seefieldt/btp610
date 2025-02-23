@@ -9,9 +9,6 @@ npm install
 npx expo start --tunnel
 ```
 
-### Run on iOS:
-`npx expo run:ios`
-
 ## Dependencies:
 - `@react-navigation/native`
 - `react-native-screens`
