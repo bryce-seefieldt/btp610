@@ -15,8 +15,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
+// Import screens from within the app
 import OrderScreen from "./screens/OrderScreen";
-
+import ReceiptScreen from "./screens/ReceiptScreen";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>        
         <Stack.Screen name="Order" component={OrderScreen} />
+        <Stack.Screen name="Receipt" component={ReceiptScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

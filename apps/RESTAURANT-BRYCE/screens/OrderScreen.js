@@ -32,7 +32,7 @@ export default function OrderScreen({ navigation }) {
 
   // Constants for item details
   const ITEM_NAME = "Giant Novelty Celebration Cake";
-  const ITEM_PRICE = 1149.99;
+  const ITEM_PRICE = 1499.99;
   const SURPRISE_PRICE = 300.00;
   const DELIVERY_PRICE = 100.00;
 
@@ -46,20 +46,45 @@ export default function OrderScreen({ navigation }) {
   const handleSubmit = () => {
     // Input validation pattern from apps/w07s02-Final/screens/AddScreen.js
     if (parseInt(quantity) <= 0 || isNaN(parseInt(quantity))) {
-      Alert.alert("Invalid Quantity", "Please enter a valid quantity");
+      Alert.alert(
+        "Invalid Quantity", 
+        "Please enter a valid quantity greater than 0"
+      );
       return;
     }
 
+    // Calculate final total for passing to receipt
+    const subtotal = parseFloat(calculateSubtotal());
+
     // Navigation with params pattern from notes/wk06s01-Multicreen_Apps.md
     navigation.navigate('Receipt', {
-      quantity: parseInt(quantity),
-      includeSurprises,
-      includeDelivery,
+      // Order details
       itemName: ITEM_NAME,
       itemPrice: ITEM_PRICE,
+      quantity: parseInt(quantity),
+      
+      // Add-ons
+      includeSurprises,
+      includeDelivery,
       surprisePrice: SURPRISE_PRICE,
-      deliveryPrice: DELIVERY_PRICE
+      deliveryPrice: DELIVERY_PRICE,
+      
+      // Totals
+      subtotal: subtotal,
+      orderNumber: Math.floor(100000 + Math.random() * 900000), // 6-digit order number
+      
+      // Timestamp
+      orderDate: new Date().toLocaleString()
     });
+  };
+
+  // Calculate subtotal based on quantity and selected add-ons
+  // Pattern for calculations from apps/w07s02-Final/screens/HomeScreen.js
+  const calculateSubtotal = () => {
+    let basePrice = ITEM_PRICE;
+    if (includeSurprises) basePrice += SURPRISE_PRICE;
+    if (includeDelivery) basePrice += DELIVERY_PRICE;
+    return (basePrice * parseInt(quantity || '0')).toFixed(2);
   };
 
   return (
@@ -80,20 +105,20 @@ export default function OrderScreen({ navigation }) {
         {/* Form Fields Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
         <View style={styles.form}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Desired Quantity:</Text>
+            <Text style={styles.label}>Quantity:</Text>
             <TextInput
               style={styles.input}
               value={quantity}
               onChangeText={setQuantity}
               keyboardType="numeric"
-              placeholder="Enter quantity"
+              placeholder="Enter desired quantity"
             />
           </View>
 
           {/* Switch components pattern from apps/w07s02-Final/screens/AddScreen.js */}
           <View style={styles.switchContainer}>
             <View style={styles.switchRow}>
-              <Text>"Singer who pops out of the cake" ADD-ON (+${SURPRISE_PRICE.toFixed(2)})</Text>
+              <Text>"Singer pops out of the cake" (+${SURPRISE_PRICE.toFixed(2)})</Text>
               <Switch
                 value={includeSurprises}
                 onValueChange={setIncludeSurprises}
@@ -109,12 +134,20 @@ export default function OrderScreen({ navigation }) {
           </View>
         </View>
 
+        {/* Subtotal Display - Pattern from apps/w07s02-Final/screens/HomeScreen.js */}
+        <View style={styles.subtotalContainer}>
+          <Text style={styles.subtotalLabel}>Order Subtotal:</Text>
+          <Text style={styles.subtotalAmount}>
+            ${calculateSubtotal()}
+          </Text>
+        </View>
+
         {/* Buttons Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
         <View style={styles.buttonContainer}>
           <Button 
             title="Submit Order" 
             onPress={handleSubmit}
-            color="#2ecc71"  // Matching the price text color
+            color="#2ecc71"
           />
           <View style={styles.buttonSpacing} />
           <Button 
@@ -191,5 +224,25 @@ const styles = StyleSheet.create({
   },
   buttonSpacing: {
     height: 10,  // Space between buttons
-  }
+  },
+  // Subtotal styling pattern from apps/w07s02-Final/screens/HomeScreen.js
+  subtotalContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  subtotalLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  subtotalAmount: {
+    fontSize: 20,
+    color: '#2ecc71',
+    fontWeight: 'bold',
+  },
 });
