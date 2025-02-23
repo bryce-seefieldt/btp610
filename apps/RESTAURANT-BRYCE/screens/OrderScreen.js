@@ -8,6 +8,7 @@
  * - Image implementation from apps/w01s02/App_Basic.js
  * - Form field patterns from apps/w07s02-Final/screens/AddScreen.js
  * - State management from notes/wk04-user-input_and_output.md
+ * - Button handlers from apps/w07s02-Final/screens/AddScreen.js
  */
 
 import { useState } from 'react';
@@ -19,7 +20,8 @@ import {
   Image, 
   TextInput,
   Switch,
-  Button 
+  Button,
+  Alert 
 } from 'react-native';
 
 export default function OrderScreen({ navigation }) {
@@ -31,8 +33,34 @@ export default function OrderScreen({ navigation }) {
   // Constants for item details
   const ITEM_NAME = "Giant Novelty Celebration Cake";
   const ITEM_PRICE = 1149.99;
-  const SURPRISE_PRICE = 300.;
+  const SURPRISE_PRICE = 300.00;
   const DELIVERY_PRICE = 100.00;
+
+  // Form handlers pattern from apps/w07s02-Final/screens/AddScreen.js
+  const handleClear = () => {
+    setQuantity('1');
+    setIncludeSurprises(false);
+    setIncludeDelivery(false);
+  };
+
+  const handleSubmit = () => {
+    // Input validation pattern from apps/w07s02-Final/screens/AddScreen.js
+    if (parseInt(quantity) <= 0 || isNaN(parseInt(quantity))) {
+      Alert.alert("Invalid Quantity", "Please enter a valid quantity");
+      return;
+    }
+
+    // Navigation with params pattern from notes/wk06s01-Multicreen_Apps.md
+    navigation.navigate('Receipt', {
+      quantity: parseInt(quantity),
+      includeSurprises,
+      includeDelivery,
+      itemName: ITEM_NAME,
+      itemPrice: ITEM_PRICE,
+      surprisePrice: SURPRISE_PRICE,
+      deliveryPrice: DELIVERY_PRICE
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -46,6 +74,53 @@ export default function OrderScreen({ navigation }) {
           <Image 
             source={require('../assets/giant-cake.png')}
             style={styles.itemImage}
+          />
+        </View>
+
+        {/* Form Fields Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
+        <View style={styles.form}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Desired Quantity:</Text>
+            <TextInput
+              style={styles.input}
+              value={quantity}
+              onChangeText={setQuantity}
+              keyboardType="numeric"
+              placeholder="Enter quantity"
+            />
+          </View>
+
+          {/* Switch components pattern from apps/w07s02-Final/screens/AddScreen.js */}
+          <View style={styles.switchContainer}>
+            <View style={styles.switchRow}>
+              <Text>"Singer who pops out of the cake" ADD-ON (+${SURPRISE_PRICE.toFixed(2)})</Text>
+              <Switch
+                value={includeSurprises}
+                onValueChange={setIncludeSurprises}
+              />
+            </View>
+            <View style={styles.switchRow}>
+              <Text>Include Delivery (+${DELIVERY_PRICE.toFixed(2)})</Text>
+              <Switch
+                value={includeDelivery}
+                onValueChange={setIncludeDelivery}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Buttons Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
+        <View style={styles.buttonContainer}>
+          <Button 
+            title="Submit Order" 
+            onPress={handleSubmit}
+            color="#2ecc71"  // Matching the price text color
+          />
+          <View style={styles.buttonSpacing} />
+          <Button 
+            title="Clear Form" 
+            onPress={handleClear}
+            color="#95a5a6"
           />
         </View>
       </ScrollView>
@@ -80,4 +155,41 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
   },
+  // Form styling patterns from apps/w07s02-Final/screens/AddScreen.js
+  form: {
+    marginTop: 20,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 16,
+  },
+  switchContainer: {
+    marginBottom: 20,
+  },
+  switchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+    paddingRight: 10,
+  },
+  // Button styling patterns from apps/w07s02-Final/screens/AddScreen.js
+  buttonContainer: {
+    marginTop: 20,
+    marginBottom: 40,
+    paddingHorizontal: 20,
+  },
+  buttonSpacing: {
+    height: 10,  // Space between buttons
+  }
 });
