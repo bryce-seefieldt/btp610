@@ -1,33 +1,14 @@
 /**
  * Receipt Screen Component
- * Displays order confirmation and details
+ * /screens/ReceiptScreen.js
  * 
- * Key Course Concepts:
- * 1. Route Parameters (Week 6)
- *    - Extracting navigation params
- *    - Using passed data for display
+ * Displays order confirmation details
  * 
- * 2. Complex Layouts (Weeks 2-3)
- *    - Nested View components
- *    - Conditional rendering
- *    - ScrollView implementation
- * 
- * 3. Styling Patterns (Week 2)
- *    - Container/item relationship
- *    - Flexbox for alignment
- *    - Custom typography
- *    - Border and shadow effects
- * 
- * 4. Data Display (Week 4)
- *    - Formatting numbers
- *    - Conditional section rendering
- *    - Computed values display
- * 
- * Implementation References:
- * - Route params usage from notes/wk06s01-Multicreen_Apps.md
- * - Basic layout from apps/w07s02-Final/screens/HomeScreen.js
- * - Detail rows pattern from apps/w07s02-Final/screens/HomeScreen.js
- * - Total section pattern from apps/w07s02-Final/screens/HomeScreen.js
+ * Features:
+ * - Extracts and processes navigation params
+ * - Displays order details
+ * - Computes totals
+ *
  */
 
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
@@ -47,18 +28,19 @@ export default function ReceiptScreen({ route }) {
     orderDate
   } = route.params;
 
-  // Computed values pattern (Week 4)
+  // Calculate totals
   const surpriseTotal = surprisePrice * quantity;
   const deliveryTotal = deliveryPrice * quantity;
   
-  // Tax calculations using Week 4 computation patterns
+  // Tax calculations 
   const TAX_RATE = 0.13;
   const subtotalBeforeTax = parseFloat(subtotal);
   const salesTax = subtotalBeforeTax * TAX_RATE;
   const finalTotal = subtotalBeforeTax + salesTax;
 
-  // Conditional rendering pattern (Week 3)
+  // Conditional rendering if add-ons selected
   const hasAddOns = includeSurprises || includeDelivery;
+
 
   return (
     <View style={styles.container}>
@@ -70,7 +52,7 @@ export default function ReceiptScreen({ route }) {
           <Text style={styles.orderDate}>{orderDate}</Text>
         </View>
 
-        {/* Order Details Section - Pattern from apps/w07s02-Final/screens/HomeScreen.js */}
+        {/* Order Details Section  */}
         <View style={styles.detailsContainer}>
           {/* Main Item Details */}
           <View style={styles.detailRow}>
@@ -123,7 +105,7 @@ export default function ReceiptScreen({ route }) {
         <View style={styles.thankYouContainer}>
           <Text style={styles.thankYouText}>Thank you for your order!</Text>
           <Text style={styles.instructionText}>
-            Your order will be ready in approximately 4 business days.
+            Your order will be ready in about 4 business days.
           </Text>
           <Text style={styles.instructionTextStrong}> Don't call us, we'll call you.
           </Text>
@@ -245,6 +227,9 @@ const styles = StyleSheet.create({
     color: '#303952',
     textAlign: 'center',
     marginBottom: 5,
+    flexWrap: 'wrap',//wraps text to next line if too long
+    width: '80%',
+    lineHeight: 20,
   },
   instructionTextStrong: {
     color: '#303952',

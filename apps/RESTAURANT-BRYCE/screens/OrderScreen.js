@@ -1,34 +1,18 @@
 /**
- * Order Screen Component
- * Primary screen for food order input
+ * Order Input Screen
+ * /screens/OrderScreen.js
  * 
- * Key Course Concepts:
- * 1. State Management (Week 4)
- *    - useState hooks for form control
- *    - Controlled components pattern
+ * Handles:
+ * - Product selection and quantity input
+ * - Optional add-ons (surprise person, delivery)
+ * - Price calculations
+ * - Order submission
  * 
- * 2. UI Components (Weeks 1-3)
- *    - ScrollView for content overflow
- *    - Image handling and styling
- *    - Switch components for toggles
- *    - TextInput for user data entry
- * 
- * 3. Layout & Styling (Week 2)
- *    - Flexbox implementation
- *    - StyleSheet organization
- *    - Consistent color theming
- * 
- * 4. Navigation (Week 6)
- *    - Route parameter passing
- *    - Screen transitions
- * 
- * Layout Structure References:
- * - ScrollView pattern from apps/w07s02-Final/screens/AddScreen.js
- * - Flex styling approach from apps/w02s02-flexbox/App_Basic.js
- * - Image implementation from apps/w01s02/App_Basic.js
- * - Form field patterns from apps/w07s02-Final/screens/AddScreen.js
- * - State management from notes/wk04-user-input_and_output.md
- * - Button handlers from apps/w07s02-Final/screens/AddScreen.js
+ * Features:
+ * - Form validation
+ * - Price updates
+ * - Image switching based on selection options
+ * - Data passing to receipt screen
  */
 
 import { useState } from 'react';
@@ -45,32 +29,32 @@ import {
 } from 'react-native';
 
 export default function OrderScreen({ navigation }) {
-  // State management pattern from notes/wk04-user-input_and_output.md
+  // Form input values
   const [quantity, setQuantity] = useState('1');
   const [includeSurprises, setIncludeSurprises] = useState(false);
   const [includeDelivery, setIncludeDelivery] = useState(false);
 
-  // Constants for item details
+  // Product pricing 
   const ITEM_NAME = "Giant Novelty Celebration Cake";
   const ITEM_PRICE = 1499.99;
   const SURPRISE_PRICE = 300.00;
   const DELIVERY_PRICE = 100.00;
 
-  // Get the appropriate image based on surprise selection
+  // Switch image based on surprise option
   const cakeImage = includeSurprises 
     ? require('../assets/giant-cake-w-surprise.png')
     : require('../assets/giant-cake.png');
 
-  // Form handlers pattern from apps/w07s02-Final/screens/AddScreen.js
+  // Reset form
   const handleClear = () => {
     setQuantity('1');
     setIncludeSurprises(false);
     setIncludeDelivery(false);
   };
 
-  // Navigation parameter pattern (Week 6)
+  // Process and validate order
   const handleSubmit = () => {
-    // Input validation (Week 4 - User Input)
+    // Input validation
     if (parseInt(quantity) <= 0 || isNaN(parseInt(quantity))) {
       Alert.alert(
         "Invalid Quantity", 
@@ -79,10 +63,10 @@ export default function OrderScreen({ navigation }) {
       return;
     }
 
-    // Calculate final total using Week 4 computation patterns
+    // Calculate final total 
     const subtotal = parseFloat(calculateSubtotal());
 
-    // Navigation with params (Week 6 - Multi-screen Apps)
+    // Navigation with params
     navigation.navigate('Receipt', {
       // Order details
       itemName: ITEM_NAME,
@@ -104,8 +88,7 @@ export default function OrderScreen({ navigation }) {
     });
   };
 
-  // Calculate subtotal based on quantity and selected add-ons
-  // Pattern for calculations from apps/w07s02-Final/screens/HomeScreen.js
+  // Calculate order total with options
   const calculateSubtotal = () => {
     let basePrice = ITEM_PRICE;
     if (includeSurprises) basePrice += SURPRISE_PRICE;
@@ -121,14 +104,14 @@ export default function OrderScreen({ navigation }) {
           <Text style={styles.itemName}>{ITEM_NAME}</Text>
           <Text style={styles.itemPrice}>${ITEM_PRICE.toFixed(2)} each</Text>
           
-          {/* Image implementation from apps/w01s02/App_Basic.js */}
+          {/* Item image */}
           <Image 
             source={cakeImage}
             style={styles.itemImage}
           />
         </View>
 
-        {/* Form Fields Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
+        {/* Form Fields Section*/}
         <View style={styles.form}>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Quantity:</Text>
@@ -144,7 +127,7 @@ export default function OrderScreen({ navigation }) {
           {/* Switch components with updated colors */}
           <View style={styles.switchContainer}>
             <View style={styles.switchRow}>
-              <Text>Person pops out of Cake (${SURPRISE_PRICE.toFixed(2)})</Text>
+              <Text>Person Pops Out of Cake (${SURPRISE_PRICE.toFixed(2)})</Text>
               <Switch
                 value={includeSurprises}
                 onValueChange={setIncludeSurprises}
@@ -164,7 +147,7 @@ export default function OrderScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Subtotal Display - Pattern from apps/w07s02-Final/screens/HomeScreen.js */}
+        {/* Subtotal Display*/}
         <View style={styles.subtotalContainer}>
           <Text style={styles.subtotalLabel}>Order Subtotal:</Text>
           <Text style={styles.subtotalAmount}>
@@ -224,9 +207,9 @@ const styles = StyleSheet.create({
     width: 200,
     height: 160,
     borderRadius: 10,
-    resizeMode: 'contain',  // Ensures image fits within dimensions while maintaining aspect ratio
+    resizeMode: 'contain',  // fit image within dimensions, maintaining aspect ratio
   },
-  // Form styling patterns from apps/w07s02-Final/screens/AddScreen.js
+  // Form styling patterns 
   form: {
     marginTop: 20,
   },
@@ -235,7 +218,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',  // Aligns children horizontally
     alignItems: 'center',  // Centers children vertically
     justifyContent: 'space-between', // Pushes label and input to opposite sides
-    paddingRight: 10,  // Matches switch container padding
+    paddingRight: 10,  
     
   },
   label: {

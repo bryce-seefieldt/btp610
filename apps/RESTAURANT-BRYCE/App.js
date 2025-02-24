@@ -1,18 +1,13 @@
 /**
- * Main App Navigation Configuration
- * Key Course Concepts:
- * 1. Stack Navigation Pattern (Week 6)
- *    - NavigationContainer as root wrapper
- *    - Stack.Navigator for screen management
- *    - Stack.Screen for individual route definitions
+ * Main Navigation Setup
+ * /App.js
+ * This is the app's root component:
+ * - Sets up the navigation container
+ * - Defines the screen stack
+ * - Manages transitions between Order and Receipt screens
  * 
- * 2. Screen Architecture (Week 7)
- *    - Separation of screens into components
- *    - Consistent navigation pattern between Order and Receipt
- * 
- * Reference Implementations:
- * - Stack setup from apps/w07s02-Final/App.js
- * - Navigation pattern from notes/wk06s01-Multicreen_Apps.md
+ * Uses stack navigation pattern for simple forward/back
+ * navigation between screens.
  */
 
 import { StyleSheet } from 'react-native';
@@ -33,6 +28,10 @@ const App = () => {
         <Stack.Screen 
           name="Receipt" 
           component={ReceiptScreen}
+          options={{
+            headerLeft: null,  // This removes the back button
+            gestureEnabled: false  // This prevents the back swipe gesture
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
