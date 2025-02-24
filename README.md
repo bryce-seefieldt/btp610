@@ -14,4 +14,3 @@ Build app from source code:
 Run Expo app (from app root folder):
 `npx expo start --tunnel`
 
-please apply all those improvements to the current `App.js` file.  PLease ensure to provide detailed comments indicating what changes have been made to the source code and why.
