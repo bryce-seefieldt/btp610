@@ -2,6 +2,26 @@
  * Order Screen Component
  * Primary screen for food order input
  * 
+ * Key Course Concepts:
+ * 1. State Management (Week 4)
+ *    - useState hooks for form control
+ *    - Controlled components pattern
+ * 
+ * 2. UI Components (Weeks 1-3)
+ *    - ScrollView for content overflow
+ *    - Image handling and styling
+ *    - Switch components for toggles
+ *    - TextInput for user data entry
+ * 
+ * 3. Layout & Styling (Week 2)
+ *    - Flexbox implementation
+ *    - StyleSheet organization
+ *    - Consistent color theming
+ * 
+ * 4. Navigation (Week 6)
+ *    - Route parameter passing
+ *    - Screen transitions
+ * 
  * Layout Structure References:
  * - ScrollView pattern from apps/w07s02-Final/screens/AddScreen.js
  * - Flex styling approach from apps/w02s02-flexbox/App_Basic.js
@@ -36,6 +56,11 @@ export default function OrderScreen({ navigation }) {
   const SURPRISE_PRICE = 300.00;
   const DELIVERY_PRICE = 100.00;
 
+  // Get the appropriate image based on surprise selection
+  const cakeImage = includeSurprises 
+    ? require('../assets/giant-cake-w-surprise.png')
+    : require('../assets/giant-cake.png');
+
   // Form handlers pattern from apps/w07s02-Final/screens/AddScreen.js
   const handleClear = () => {
     setQuantity('1');
@@ -43,8 +68,9 @@ export default function OrderScreen({ navigation }) {
     setIncludeDelivery(false);
   };
 
+  // Navigation parameter pattern (Week 6)
   const handleSubmit = () => {
-    // Input validation pattern from apps/w07s02-Final/screens/AddScreen.js
+    // Input validation (Week 4 - User Input)
     if (parseInt(quantity) <= 0 || isNaN(parseInt(quantity))) {
       Alert.alert(
         "Invalid Quantity", 
@@ -53,10 +79,10 @@ export default function OrderScreen({ navigation }) {
       return;
     }
 
-    // Calculate final total for passing to receipt
+    // Calculate final total using Week 4 computation patterns
     const subtotal = parseFloat(calculateSubtotal());
 
-    // Navigation with params pattern from notes/wk06s01-Multicreen_Apps.md
+    // Navigation with params (Week 6 - Multi-screen Apps)
     navigation.navigate('Receipt', {
       // Order details
       itemName: ITEM_NAME,
@@ -69,10 +95,10 @@ export default function OrderScreen({ navigation }) {
       surprisePrice: SURPRISE_PRICE,
       deliveryPrice: DELIVERY_PRICE,
       
-      // Totals
+      // Total
       subtotal: subtotal,
-      orderNumber: Math.floor(100000 + Math.random() * 900000), // 6-digit order number
-      
+      // Quasi-random 6-digit order number
+      orderNumber: Math.floor(100000 + Math.random() * 900000), 
       // Timestamp
       orderDate: new Date().toLocaleString()
     });
@@ -93,11 +119,11 @@ export default function OrderScreen({ navigation }) {
         {/* Item Details Section */}
         <View style={styles.itemDetails}>
           <Text style={styles.itemName}>{ITEM_NAME}</Text>
-          <Text style={styles.itemPrice}>${ITEM_PRICE.toFixed(2)}</Text>
+          <Text style={styles.itemPrice}>${ITEM_PRICE.toFixed(2)} each</Text>
           
           {/* Image implementation from apps/w01s02/App_Basic.js */}
           <Image 
-            source={require('../assets/giant-cake.png')}
+            source={cakeImage}
             style={styles.itemImage}
           />
         </View>
@@ -111,24 +137,28 @@ export default function OrderScreen({ navigation }) {
               value={quantity}
               onChangeText={setQuantity}
               keyboardType="numeric"
-              placeholder="Enter desired quantity"
+              placeholder="Enter quantity"
             />
           </View>
 
-          {/* Switch components pattern from apps/w07s02-Final/screens/AddScreen.js */}
+          {/* Switch components with updated colors */}
           <View style={styles.switchContainer}>
             <View style={styles.switchRow}>
-              <Text>"Singer pops out of the cake" (+${SURPRISE_PRICE.toFixed(2)})</Text>
+              <Text>Person pops out of Cake (${SURPRISE_PRICE.toFixed(2)})</Text>
               <Switch
                 value={includeSurprises}
                 onValueChange={setIncludeSurprises}
+                trackColor={{ false: '#d1d8e0', true: '#63cdda' }}  // Updated switch color
+
               />
             </View>
             <View style={styles.switchRow}>
-              <Text>Include Delivery (+${DELIVERY_PRICE.toFixed(2)})</Text>
+              <Text>Delivery (${DELIVERY_PRICE.toFixed(2)})</Text>
               <Switch
                 value={includeDelivery}
                 onValueChange={setIncludeDelivery}
+                trackColor={{ false: '#d1d8e0', true: '#63cdda' }}  // Updated switch color
+
               />
             </View>
           </View>
@@ -142,18 +172,19 @@ export default function OrderScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* Buttons Section - Pattern from apps/w07s02-Final/screens/AddScreen.js */}
+        {/* Buttons with updated colors */}
         <View style={styles.buttonContainer}>
           <Button 
             title="Submit Order" 
             onPress={handleSubmit}
-            color="#2ecc71"
+            color="#c44569"  
+            fontWeight='bold'
           />
           <View style={styles.buttonSpacing} />
           <Button 
             title="Clear Form" 
             onPress={handleClear}
-            color="#95a5a6"
+            color="#596275"  
           />
         </View>
       </ScrollView>
@@ -177,16 +208,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#e66767',
+    textAlign: 'center',
+    textShadowColor: '#63cdda',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+    width: '100%',
   },
   itemPrice: {
     fontSize: 20,
-    color: '#2ecc71',
+    color: '#546de5',
     marginBottom: 15,
   },
   itemImage: {
-    width: 250,
-    height: 200,
+    width: 200,
+    height: 160,
     borderRadius: 10,
+    resizeMode: 'contain',  // Ensures image fits within dimensions while maintaining aspect ratio
   },
   // Form styling patterns from apps/w07s02-Final/screens/AddScreen.js
   form: {
@@ -194,10 +232,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 20,
+    flexDirection: 'row',  // Aligns children horizontally
+    alignItems: 'center',  // Centers children vertically
+    justifyContent: 'space-between', // Pushes label and input to opposite sides
+    paddingRight: 10,  // Matches switch container padding
+    
   },
   label: {
     fontSize: 16,
-    marginBottom: 5,
   },
   input: {
     borderWidth: 1,
@@ -205,13 +247,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     fontSize: 16,
+    width: 170,
+    backgroundColor: '#63cdda',
   },
   switchContainer: {
     marginBottom: 20,
+    color: '#f7d794',   
   },
   switchRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between',  // Pushes label and switch to opposite sides
     alignItems: 'center',
     marginBottom: 15,
     paddingRight: 10,
@@ -232,17 +277,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#546de5',
     borderRadius: 5,
     marginBottom: 20,
   },
   subtotalLabel: {
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
   subtotalAmount: {
     fontSize: 20,
-    color: '#2ecc71',
+    color: '#ea8685',
     fontWeight: 'bold',
   },
 });
