@@ -1,4 +1,4 @@
-# BTP610; Assignment 2
+git # BTP610; Assignment 2
 **Cross-Platform App for Ordering and Receipt Management**  
 _A React Native project for ordering novelty celebration cakes with optional add-ons_
 
