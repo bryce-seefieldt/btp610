@@ -7,9 +7,6 @@ npm install @react-navigation/stack
 npx expo install react-native-gesture-handler
 npm install @react-navigation/bottom-tabs
 npm install @expo/vector-icons
-
-
-
 */
 import { StyleSheet } from 'react-native';
 // Navigation imports (ref: wk06s01-Multicreen_Apps.md)
