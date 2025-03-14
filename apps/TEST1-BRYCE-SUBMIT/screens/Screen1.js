@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, Button, TextInput, Switch } from 'react-native';
 import { useState } from "react";
+import { addTransaction } from '../transactions';
 
-export default function Screen1({ navigation, route }) {
-    const { addTransaction } = route.params;
+export default function Screen1({ navigation }) {
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
     const [transactionType, setTransactionType] = useState(false);
 
     const handleSubmit = () => {
-        const transaction = {
+        var transaction = {
             amount: transactionType ? Number(amount) : -Number(amount),
             description: description,
             type: transactionType ? 'deposit' : 'expense',
@@ -16,6 +16,12 @@ export default function Screen1({ navigation, route }) {
         };
         
         addTransaction(transaction);
+        alert('Transaction saved!');
+
+        // Reset form
+        setAmount('');
+        setDescription('');
+
         navigation.navigate('All Transactions');
     }
 

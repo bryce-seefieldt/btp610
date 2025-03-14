@@ -2,8 +2,8 @@ import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useState, useEffect } from "react";
 import { getTransactions, deleteTransaction, getTotalBalance } from '../transactions';
 
-export default function Screen2({ route }) {
-    const { transactions, deleteTransaction, getTotalBalance } = route.params;
+export default function Screen2({ navigation }) {
+    const [transactions, setTransactions] = useState([]);
     const [totalBalance, setTotalBalance] = useState(0);
 
     const updateTransactions = () => {
@@ -13,9 +13,13 @@ export default function Screen2({ route }) {
     };
 
     useEffect(() => {
+
+        updateTransactions();
+
         const unsubscribe = navigation.addListener('focus', () => {
-            // Screen is focused
+            updateTransactions();
         });
+
         return unsubscribe;
     }, [navigation]);
 
