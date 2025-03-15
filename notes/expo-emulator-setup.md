@@ -18,8 +18,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.bashrc
 
 # Install and use a newer Node.js version
-nvm install 16
-nvm use 16
+nvm install 21
+nvm use 21
 
 # Verify installation
 node -v
