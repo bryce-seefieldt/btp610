@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "w01s02-w25",
-    "slug": "w01s02-w25",
+    "name": "wk08-api",
+    "slug": "wk08-api",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,8 +19,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.w01s02w25"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
