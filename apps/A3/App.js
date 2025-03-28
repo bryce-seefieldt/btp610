@@ -1,83 +1,80 @@
+// \apps\A3\App.js
 import * as Location from "expo-location"
 import MapView, {Marker} from "react-native-maps"
-
-import { StyleSheet, Text, View, TextInput, Button, SafeAreaView, Platform, StatusBar } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, SafeAreaView, Platform, StatusBar, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react"
 
+export default function App() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-export default function App()  {
+    const [addressFromUI, setAddressFromUI] = useState("1750 Finch Avenue East, Toronto, ON")
+    const [latFromUI, setLatFromUI] = useState("43.7778779")
+    const [lngFromUI] = useState("-79.3495249")
 
-   const [addressFromUI, setAddressFromUI] = useState("1750 Finch Avenue East, Toronto, ON")
- 
-   // Starbucks Vancouver: 2505 Granville St, Vancouver, BC V6H 3G7
-   const [latFromUI, setLatFromUI] = useState("43.7778779")
-   const [lngFromUI, setLngFromUI] = useState("-79.3495249")
+    const [fwdGecodeResultsLabel, setFwdGecodeResultsLabel] = useState("reverse geocoding results go here")
+    const [reverseGecodeResultsLabel, setReverseGecodeResultsLabel] = useState("reverse geocoding results go here")
+    const [currLocationLabel, setCurrLocationLabel] = useState("curr location results here")
 
-   const [fwdGecodeResultsLabel, setFwdGecodeResultsLabel] = useState("reverse geocoding results go here")
-   const [reverseGecodeResultsLabel, setReverseGecodeResultsLabel] = useState("reverse geocoding results go here")
-   const [currLocationLabel, setCurrLocationLabel] = useState("curr location results here")
+    const [visibleMapRegion, setVisibleMapRegion] = useState({
+        latitude: 43.7949433,
+        longitude: -79.3529767,
+        latitudeDelta: 1,
+        longitudeDelta: 1
+    })
 
+    useEffect(() => {
+        requestPermissions()
+    }, [])
 
-   // state variable to control the visible area of the map
-   // the coordinates will dictate the starting position of the map
-   const [visibleMapRegion, setVisibleMapRegion] = useState(
-       {
-         latitude: 43.7949433,
-         longitude: -79.3529767,
-         latitudeDelta: 1,
-         longitudeDelta:1
-       }
-   )
-
-   // use this funciton when the app loads
-   useEffect(()=>{
-       requestPermissions()
-   },[])
-
-
-   // dd a function to ask for permissions
-   const requestPermissions = async () => {
-       try {          
-          const permissionsObject = 
-              await Location.requestForegroundPermissionsAsync()
-          if (permissionsObject.status  === "granted") {
-              alert("Permission granted!")              
-          } else {
-              alert("Permission denied or not provided")              
-          }
-       } catch (err) {
-          console.log(err)
-       }
+    const requestPermissions = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const permissionsObject = await Location.requestForegroundPermissionsAsync()
+            if (permissionsObject.status === "granted") {
+                console.log("Permission granted!");
+            } else {
+                setError("Location permission denied");
+            }
+        } catch (err) {
+            console.log("ERROR:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
     }
    
 
 
 
    const doFwdGeocode = async () => {
-       console.log("+++ DEBUG: Foward Geocoding")
+       console.log("+++ DEBUG: Forward Geocoding")
+       try {
+           setIsLoading(true);
+           setError(null);
+           
+           // 1. attempt: convert the address to a coordinate
+           const geocodedLocation = await Location.geocodeAsync(addressFromUI)
 
-       // 1. attempt: convert the address to a coordinate
-       const geocodedLocation = await Location.geocodeAsync(addressFromUI)
+           // 2. get the results
+           const results = geocodedLocation[0]
+           if (results === undefined) {
+               throw new Error("Could not find coordinate");
+           }
 
-       // 2. get the results
-       const results = geocodedLocation[0]
-       // --- 2a. results = undefined       
-       if (results === undefined) {
-           // could not find a matching coordinate
-           // addressFromUI = "BLAH BLAH BLAH XHSYD 2343423"
-           console.log("ERROR: cannot find coordinate")
-           setFwdGecodeResultsLabel("ERROR: Could not find coordinate.")
-           // stop and do not proceed with any other logic
-           return
+           console.log("Results found:", results)
+           
+           // 3. extract the latitude and longitude and show it in the UI
+           const output = `Lat: ${results.latitude}, Lng: ${results.longitude}`
+           setFwdGecodeResultsLabel(output)
+       } catch (err) {
+           console.log("ERROR:", err);
+           setError(err.message);
+           setFwdGecodeResultsLabel("ERROR: " + err.message);
+       } finally {
+           setIsLoading(false);
        }
-       // --- 2b. results contains something
-       console.log("Results found:")
-       console.log(results)
-       // {"accuracy": 100, "altitude": 0, "latitude": 43.7957894, "longitude": -79.3489909}
-
-       // 3. extract the latitude and longitude and show it in the UI
-       const output = `Lat: ${results.latitude}, Lng: ${results.longitude}`
-       setFwdGecodeResultsLabel(output)
    }
   
    const doReverseGeocode = async () => {
@@ -142,54 +139,36 @@ export default function App()  {
 
    return (
        <SafeAreaView style={styles.container}>
-           <Text style={styles.headingText}>Geocoding Demo</Text>
-        
-           <TextInput
-               style={styles.input}
-               onChangeText={setAddressFromUI}
-               placeholder="Enter address (example: 123 Main Street)"
-               value={addressFromUI}
-           />
-           <Button title="Forward Geocoding" onPress={doFwdGeocode}/>
-           <Text style={styles.text}>{fwdGecodeResultsLabel}</Text>
-{/* 
-           <View style={{flexDirection:"row", justifyContent:"center"}}>
-               <TextInput
-                   style={styles.input}
-                   onChangeText={setLatFromUI}
-                   placeholder="Enter latitude"
-                   value={latFromUI}
-               />
-               <TextInput
-                   style={styles.input}
-                   onChangeText={setLngFromUI}
-                   placeholder="Enter longitude"
-                   value={lngFromUI}
-               />
-           </View>
-
-           <Button title="Reverse Geocoding" onPress={doReverseGeocode}/>
-           <Text style={styles.text}>{reverseGecodeResultsLabel}</Text>
-
-           <Button title="Get Current Location" onPress={getCurrLocation}/>
-           <Text style={styles.text}>{currLocationLabel}</Text> 
-*/}
-           <MapView initialRegion={visibleMapRegion} style={styles.map}>
-               <Marker
-                   coordinate={{latitude:43.6826927, longitude:-79.6904297}}
-                   title="Toronto Pearson Airport"
-                   description="The busiest airport in canada" 
-             
-               />
-               {/* <Marker
-                   coordinate={{latitude:43.7778779, longitude:-79.3495249}}
-                   onPress={()=>{ alert("You clicked on college!")}}
-               /> */}
-
-     
-
-           </MapView>
-
+           {error ? (
+               <Text style={styles.errorText}>{error}</Text>
+           ) : isLoading ? (
+               <ActivityIndicator size="large" />
+           ) : (
+               <View style={styles.content}>
+                   <Text style={styles.headingText}>Geocoding Demo</Text>
+                
+                   <TextInput
+                       style={styles.input}
+                       onChangeText={setAddressFromUI}
+                       placeholder="Enter address (example: 123 Main Street)"
+                       value={addressFromUI}
+                   />
+                   {/* <Button title="Forward Geocoding" onPress={doFwdGeocode}/>
+                   <Text style={styles.text}>{fwdGecodeResultsLabel}</Text>
+                   <Button title="Reverse Geocoding" onPress={doReverseGeocode}/>
+                   <Text style={styles.text}>{reverseGecodeResultsLabel}</Text> */}
+                   <Button title="Get Current Location" onPress={getCurrLocation}/>
+                   <Text style={styles.text}>{currLocationLabel}</Text>
+                   <MapView initialRegion={visibleMapRegion} style={styles.map}>
+                       {/* <Marker
+                           coordinate={{latitude:43.6826927, longitude:-79.6904297}}
+                           title="Toronto Pearson Airport"
+                           description="The busiest airport in canada" 
+                     
+                       /> */}
+                   </MapView>
+               </View>
+           )}
        </SafeAreaView>
    );
 }
@@ -198,9 +177,12 @@ const styles = StyleSheet.create({
    container: {
      flex: 1,
      backgroundColor: "#fff",
-     alignItems: "center",
-     justifyContent: "center",
-     paddingTop: (Platform.OS === "android") ? StatusBar.currentHeight : 0,     
+     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+   },
+   content: {
+       flex: 1,
+       alignItems: "center",
+       padding: 20,
    },
    text: {
        fontSize:18,
@@ -217,11 +199,18 @@ const styles = StyleSheet.create({
        margin: 8,
        borderWidth: 1,
        padding: 10,
+       width: '100%',
    },   
    map : {
      borderWidth:1,
      borderColor:"black",     
      height:300,
      width:300,
-   }
+   },
+   errorText: {
+       color: 'red',
+       fontSize: 16,
+       textAlign: 'center',
+       margin: 10,
+   },
 });
