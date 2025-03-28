@@ -29,6 +29,12 @@ Expected output:
 ```powershell
 v18.20.7
 ```
+## Emulator Start
+```powershell
+PS C:\Users\bryce\AppData\Local\Android\Sdk\emulator> ./emulator -avd Pixel_8 -no-snapshot
+```
+
+`ctrl + m` Dev menu in emulator
 
 ## Firebase
 
