@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+// Main App component
 export default function App() {
 
-  /*Example 2:
+  /* Example 2:
    * Object Destructuring
    * Purpose: A convenient way to extract multiple properties from an object
    * and create individual variables in a single line of code.

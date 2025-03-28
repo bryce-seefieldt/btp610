@@ -1,20 +1,27 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react';
 
+// Main App component
 export default function App() {
+  // State to store API data
   const [apiData, setApiData] = useState(null);
 
+  // useEffect to fetch data when the component mounts
   useEffect(() => {
     getData();
   }, []);
 
+  // Function to fetch data from the API
   const getData = async () => {
     try {
+      // Fetch data from the API
       const response = await fetch('https://api.sunrisesunset.io/json?lat=38.907192&lng=-77.036873');
       const data = await response.json();
       console.log(data);
+      // Store the data in state
       setApiData(data);
     } catch (error) {
+      // Log any errors
       console.error('Error fetching data:', error);
     }
   };
@@ -36,6 +43,7 @@ export default function App() {
   );
 }
 
+// Styles for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
