@@ -169,3 +169,6 @@ yarn-error.*
 
 *Zone.Identifier
 *shield
+
+# zipped files
+*.zip
