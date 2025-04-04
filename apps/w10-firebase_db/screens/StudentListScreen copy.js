@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View, Pressable, TextInput, FlatList} from 'react-native';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 // TODO: import the required service from FirebaseConfig.js
 import { db } from '../firebaseConfig'
 
 // TODO: import the specific functions from the service
-import { collection, query, where, getDocs,  doc, updateDoc } from "firebase/firestore";
-
-// icon
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export default StudentListScreen = () => {
 
@@ -18,31 +15,16 @@ export default StudentListScreen = () => {
    // state variable to store students
    const [studentList, setStudentList] = useState([])
      
+   // button click handler
+   const btnGetStudentsPressed = async () => {
+       alert(`Textbox value is: ${nameFromUI}`)
 
-   // 1. retrieve data from database
-   const getData = async (studentName) => {
-      
+       // 1. retrieve data from database
        try {          
            // 2. after retrieving data, save data to a state variable
            const tempArray = []
 
-           // gets all documents from the "students"
-           // const querySnapshot = await getDocs( collection(db, "students") )
-
-           // get all documents where the gpa >= 2.5
-           //const q = query(collection(db, "students"), where("gpa", ">=", 88));
-           // const q = query(collection(db, "students"), where("isPostGrad", "==", true));
-
-           let querySnapshot = undefined
-           if (studentName === undefined) {
-               // if no value is provided to the parameter, then it will be undefined               
-               querySnapshot = await getDocs(collection(db, "students"));
-           } else {
-               const q = query(collection(db, "students"), where("name", "==", studentName));
-               querySnapshot = await getDocs(q);
-           }
-
-
+           const querySnapshot = await getDocs( collection(db, "students") )
            querySnapshot.forEach((currDoc) => {
                console.log(`Document id: ${currDoc.id}`)
                console.log("Document data:")
@@ -57,31 +39,12 @@ export default StudentListScreen = () => {
 
            setStudentList([...tempArray])
 
-
            // 3. when the state variable updates, the list will auto update
        } catch (err) {
            console.log(err)
        }
    }
 
-   // button click handler
-   const btnGetStudentsPressed = async () => {
-       alert(`Textbox value is: ${nameFromUI}`)
-       getData(nameFromUI)
-   }
-   useEffect(()=>{
-       getData()
-   },[])
-
-   const updatePressed = async (item) => {
-       // JSON.stinrigy wil fix the [object object] output
-       alert(item.id)
-       // update the corresponding in the db
-       await updateDoc(doc(db, "students", item.id), {gpa: -25.555})
-
-       // refresh the user interface
-       getData()
-   }
 
   return(
       <View style={styles.container}> 
@@ -100,9 +63,6 @@ export default StudentListScreen = () => {
                            <View>
                                <Text>Name: {item.name}</Text>
                                <Text>GPA: {item.gpa}</Text>
-                               <Pressable onPress={()=>{updatePressed(item)}}>
-                                   <FontAwesome5 name="edit" size={24} color="black" />
-                               </Pressable>
                            </View>
                        )
                    }

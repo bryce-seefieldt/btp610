@@ -291,7 +291,7 @@ import { collection, getDocs } from "firebase/firestore"
 
 
 Code Example:
-
+```js
 try {
    // Retrieve all documents from a collection called "students"
    // getDocs() returns a Query Snapshot object   
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
   }
  
 });
-
+```
 Result
 
 ![alt text](image-17.png)
