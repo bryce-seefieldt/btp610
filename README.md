@@ -11,10 +11,17 @@ Build app from source code:
 
 `npm install`
 
-Run Expo app (from app root folder):
+### Update Expo version
+`npx expo install expo@latest`
+
+Update dependencies to work with newest Expo version
+
+`npx expo install --fix`
+
+### Run Expo app (from app root folder):
 `npx expo start --tunnel`
 
-## Auto-Set Default on Terminal Start
+#### Auto-Set Default on Terminal Start
 To ensure a speciffic `node` version is automatically used whenever you open PowerShell, add this command to your PowerShell profile:
 
 ```powershell
