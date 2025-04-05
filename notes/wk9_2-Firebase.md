@@ -153,9 +153,6 @@ style="width:3.66667in;height:4.02083in" />
 <img src="images/media9_2/image10.png"
 style="width:21.33333in;height:10.48958in" />
 
-# 
-
-# 
 
 # Configure your Firebase Project
 
@@ -299,34 +296,6 @@ npm install expo
 
 npx expo install firebase
 
-Result:
-
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th><p>iMac-3:session06-demo-starter tech$ <mark>npx expo install
-firebase</mark></p>
-<p>› Installing 1 other package using <strong>npm</strong></p>
-<p>&gt; npm install --save firebase</p>
-<p>added 87 packages, and audited 1368 packages in 14s</p>
-<p>65 packages are looking for funding</p>
-<p>run `npm fund` for details</p>
-<p><strong>21</strong> vulnerabilities (11 <strong>moderate</strong>, 10
-<strong>high</strong>)</p>
-<p>To address issues that do not require attention, run:</p>
-<p>npm audit fix</p>
-<p>To address all issues (including breaking changes), run:</p>
-<p>npm audit fix --force</p>
-<p>Run `npm audit` for details.</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-
 After installing, check that the package.json contains the firebase
 dependency:
 
@@ -367,60 +336,600 @@ etc) to the rest of your project
 
 > [<u>https://firebase.google.com/docs/firestore/quickstart#initialize</u>](https://firebase.google.com/docs/firestore/quickstart#initialize)
 
-## 1. Add the Firestore service to firebaseConfig.js
+#BTP610 - Week 9 - Data Persistence
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th><p>// Import the functions you need from the SDKs you need</p>
-<p>import { initializeApp } from "firebase/app";</p>
-<p>// TODO: Add SDKs for Firebase products that you want to use</p>
-<p>// https://firebase.google.com/docs/web/setup#available-libraries</p>
-<p><mark>// 1. import the firestore service</mark></p>
-<p><mark>import { getFirestore } from "firebase/firestore";</mark></p>
-<p>// Your web app's Firebase configuration</p>
-<p>const firebaseConfig = {</p>
-<p>apiKey: "AIzaSyCoraicE8VelLV9ik5X49TeaLqkdeLaLfA",</p>
-<p>authDomain: "week08project-aa167.firebaseapp.com",</p>
-<p>projectId: "week08project-aa167",</p>
-<p>storageBucket: "week08project-aa167.appspot.com",</p>
-<p>messagingSenderId: "484166803174",</p>
-<p>appId: "1:484166803174:web:dc3058aeb68aa23de3a527"</p>
-<p>};</p>
-<p>// Initialize Firebase</p>
-<p>const app = initializeApp(firebaseConfig);</p>
-<p><mark>// 2. initialize Firestore service</mark></p>
-<p><mark>const db = getFirestore(app)</mark></p>
-<p><mark>// 3. export the Firestore service from this js file so other
-parts of your app can use it</mark></p>
-<p><mark>export { db }</mark></p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
 
-## 2 
+## Install Starter Code
 
-## Import the Firebase service on the required screen - 10:35am
+`btp610\apps\w09-firebase-starter`
 
-On the screen that needs access to the service, import the service from
-the firebaseConfig.js file
+Install dependencies
 
-| import { db } from '../firebaseConfig' |
-|----------------------------------------|
 
-**Code Example: Importing the service on the Entry Screen**
+npm install
 
-- The EntryScreen.js file should look something like this:
+Run application, check that you have screens like this:
 
-<img src="images/media9_2/image9.png"
-style="width:7.78588in;height:3.93864in" />
+## Using GoogleFirebase
+Configure your Firebase Project
 
-## 3. Done!
+
+To configure your firebase project:
+
+- Decide what firebase services do you want to include in your mobile application?
+- Answer: Cloud Firestore, and later on Firebase Authentication
+
+
+After you decide which FB services to use, you have to add it to the project
+
+
+How to Add Firestore to the Project
+In the Project Overview page, click Build > Firestore Database
+```powershell
+npm install firebase
+```
+
+```javascript
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBxA3Jzoy6NsYtnrLjOtW28K-2PML2gb98",
+  authDomain: "btp610-w9-data-persistence.firebaseapp.com",
+  projectId: "btp610-w9-data-persistence",
+  storageBucket: "btp610-w9-data-persistence.firebasestorage.app",
+  messagingSenderId: "794778438520",
+  appId: "1:794778438520:web:3925e0db725af819e1568d"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+```
+
+### Add Firebase Projects and Services to the React Native Project_
+1.   Create a file called “firebaseConfig.js”
+
+In the React Native project, create a file called “firebaseConfig.js”
+2.   Find your Firebase project configuration information
+	THis is from the firebase website
+3.   Copy and Paste Firebase Configuration code 
+
+- In the firebaseConfig.js file, copy and paste your Firebase project’s configuration code
+- The file should look like this:
+
+
+Now that your React Native project is configured to connect to your Firebase project, you need to  import,  initialize, and export your required Firebase services (Firestore, FirebaseAuth, Realtime Database, etc) to the rest of your project 
+
+-Documentation: Initializing Firestore service:  
+https://firebase.google.com/docs/firestore/quickstart#initialize
+
+
+4. Add the **Firestore service** to firebaseConfig.js
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+```js
+// firebaseConfig.js
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// 1. import the firestore service
+import { getFirestore } from "firebase/firestore";
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+ apiKey: "AIzaSyCoraicE8VelLV9ik5X49TeaLqkdeLaLfA",
+ authDomain: "week08project-aa167.firebaseapp.com",
+ projectId: "week08project-aa167",
+ storageBucket: "week08project-aa167.appspot.com",
+ messagingSenderId: "484166803174",
+ appId: "1:484166803174:web:dc3058aeb68aa23de3a527"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// 2. initialize Firestore service
+const db = getFirestore(app)
+
+// 3. export the Firestore service from this js file so other parts of your app can use it
+export { db }
+```
+
+#### Import the Firebase service on the required screen
+On the screen that needs access to the service, import the service from the firebaseConfig.js file
+
+```js
+import { db } from '../firebaseConfig'
+```
+
+
+Code Example:  Importing the service on the Entry Screen
+
+The EntryScreen.js file should look something like this:
+![alt text](image-11.png)
+
+This completes the process of enabling the screen to access Firestore.
+Next, write the code to perform CRUD operations on Firestore (insert, update, delete, read)
+
+#### Inserting a Document into Firestore
+To insert a new document, use the addDoc() function:
+
+The addDoc() function will insert a new document and auto-generate a document id.
+
+Documentation: https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
+
+- Notice there are several functions used to insert a document.  Choose the appropriate function for your use case!
+
+Example of the addDoc() function usage:
+
+const someFunction = async () => {
+   try {   
+       const docRef = await addDoc(collection(db, "students"), {name:"Peter Patel", gpa:2.8, isPostGrad:false})               
+   } catch (err) {
+       console.log(err)
+   }
+}
+
+##### Code Demo: Inserting a document
+
+```js
+import { StyleSheet, Text, View, TextInput, Switch, Pressable} from 'react-native';
+import {useState} from "react"
+
+
+// TODO: import the required service from FirebaseConfig.js
+import { db } from '../firebaseConfig'
+
+// TODO: import the specific functions from the service
+import { collection, addDoc } from "firebase/firestore";
+
+const EntryFormScreen = () => {
+
+  // form fields
+  const [nameFromUI, setNameFromUI] = useState("")
+  const [gpaFromUI, setGPAFromUI] = useState("")
+  const [isPGFromUI, setIsPGFromUI] = useState(true)
+
+  const buttonPressed = async () => {
+       // convert gpa to number
+       const gpaAsNumber = parseFloat(gpaFromUI)
+
+
+       // DEBUG: show values entered in textbox
+       // alert(`Name: ${nameFromUI}, GPA: ${gpaAsNumber}, IsPG? ${isPGFromUI}`)
+
+       // create object literal that represents a document you want to insert into your collection
+       const studentToInsert = {
+           name: nameFromUI,
+           gpa: gpaAsNumber,
+           isPostGrad: isPGFromUI
+       }
+
+
+       // insert into database
+       try {
+           // this code inserts into the "students" collecction
+           // addDoc() will return you a copy of the document that was inserted
+           const docRef = await addDoc(collection(db, "students"), studentToInsert)
+           alert("Data inserted, check console for output")
+           console.log(`Id of inserted document is: ${docRef.id}`)
+       } catch (err) {
+           console.log(err)
+       }
+
+  }
+
+
+  return(
+      <View style={styles.container}> 
+           {/* name tb */}
+           <TextInput placeholder="Enter name" onChangeText={setNameFromUI} value={nameFromUI} style={styles.tb}/>
+        
+           {/* gpa tb */}
+           <TextInput placeholder="Enter gpa" keyboardType="numeric" onChangeText={setGPAFromUI} value={gpaFromUI} style={styles.tb}/>
+        
+           {/* is post graduate student */}
+           <Text>Is a post graduate student?</Text>
+           <Switch onValueChange={setIsPGFromUI} value={isPGFromUI} style={{alignSelf:"flex-start"}}/>
+         
+           {/* button */}
+           <Pressable onPress={buttonPressed} style={styles.btn}>
+               <Text style={styles.btnLabel}>Insert to database</Text>
+           </Pressable>
+      </View>
+  )
+}
+export default EntryFormScreen
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',    
+    padding:20,
+  },
+  tb: {
+      width:"100%",  
+      borderRadius:5,
+      backgroundColor:"#efefef",
+      color:"#333",
+      fontWeight:"bold",
+      paddingHorizontal:10,
+      paddingVertical:15,
+      marginVertical:10,      
+  },
+  btn: {
+      borderWidth:1,
+      borderColor:"#141D21",
+      borderRadius:8,
+      paddingVertical:16,
+      marginVertical:20
+  },
+  btnLabel: {
+      fontSize:16,
+      textAlign:"center"
+  } 
+});
+
+```
+
+
+
+Result:
+
+- Enter the student details
+
+![alt text](image-12.png)
+ 
+-	In the React Native (VSCode) Terminal, the code will output the id of the newly inserted document
+
+
+ ```sh
+ LOG  Id of inserted document is: aGej9PvL0QRmvxG8firE
+ ```
+- In the web console, look for the document you inserted
+
+![alt text](image-13.png)
+
+FirebaseError: MIssing or insufficient permissions
+●	If your terminal shows this error:
+![alt text](image-14.png)
+
+●	It can be fixed by adjusting the “Rules” section of your Cloud Firestore console.
+
+●	In the “Rules” section, check for the false keyword
+![alt text](image-15.png)
+
+●	Change the false keyword to true
+●	Then press PUBLISH
+
+![alt text](image-16.png)
+
+●	After the changes are saved, try inserting into the database again
+
+
+
+ 
+Retrieve All Documents________________________________________
+
+Use the getDocs() function to retrieve all documents from a collection
+
+●	Documentation: https://firebase.google.com/docs/firestore/query-data/get-data#get_all_documents_in_a_collection
+
+
+Required Imports:
+
+import { collection, getDocs } from "firebase/firestore"
+
+
+Code Example:
+```js
+try {
+   // Retrieve all documents from a collection called "students"
+   // getDocs() returns a Query Snapshot object   
+   const querySnapshot = await getDocs(collection(db, "students"))
+  
+   // The QuerySnapshot object contains the documents retrieved from the collection
+   // Use a forEach() loop to iterate through the documents and output relevant information
+   querySnapshot.forEach((currDoc) => {
+       console.log(`Document id: ${currDoc.id}`)
+       console.log("Document data:")
+      console.log(currDoc.data())
+   })
+} catch (err) {
+   console.log(err)
+}
+
+
+ 
+Code Example:
+import { StyleSheet, Text, View, Pressable, TextInput, FlatList} from 'react-native';
+import { useState } from "react"
+
+
+// TODO: import the required service from FirebaseConfig.js
+import { db } from '../firebaseConfig'
+// TODO: import the specific functions from the service
+import { collection, getDocs } from "firebase/firestore"
+
+export default StudentListScreen = () => {
+
+   // state variable for the text box
+   const [nameFromUI, setNameFromUI] = useState("")
+
+   // state variable to store students
+   const [studentList, setStudentList] = useState([
+       {name:"Peter Smith", gpa:3.0, tuitionPaid:true, id:"psmith"},
+       {name:"Emily Patel", gpa:4.0, tuitionPaid:true, id:"epatel"},
+       {name:"Suzy Lee", gpa:2.5, tuitionPaid:false, id:"slee"},
+   ])
+     
+
+   // button click handler
+   const btnGetStudentsPressed = async () => {
+       alert(`Textbox value is: ${nameFromUI}`)
+
+       // 1. retrieve data from database
+       try {          
+           // 2. after retrieving data, save data to a state variable
+           const querySnapshot = await getDocs( collection(db, "students") )
+           querySnapshot.forEach((currDoc) => {
+               console.log(`Document id: ${currDoc.id}`)
+               console.log("Document data:")
+               console.log(currDoc.data())
+           })
+       
+           // 3. when the state variable updates, the list will auto update
+       } catch (err) {
+           console.log(err)
+       }      
+   }
+
+  return(
+      <View style={styles.container}> 
+         <TextInput placeholder="Enter name" onChangeText={setNameFromUI} text={nameFromUI} style={styles.tb}/>
+         <Pressable style={styles.btn} onPress={btnGetStudentsPressed}>
+              <Text style={styles.btnLabel}>Get from Database</Text>
+         </Pressable>
+        
+         <Text style={styles.text}>Class List</Text>
+         <FlatList
+           data={studentList}
+           keyExtractor={(item)=>{ return item.id }}
+           renderItem={
+                   ({item})=>{
+                       return(
+                           <View>
+                               <Text>Name: {item.name}</Text>
+                               <Text>GPA: {item.gpa}</Text>
+                           </View>
+                       )
+                   }
+               } 
+           ItemSeparatorComponent={
+               ()=>{
+                 return(
+                   <View style={{borderWidth:1, borderColor:"#ccc", marginVertical:4}}></View>
+                 )
+               }
+             }
+
+           />
+     </View>
+
+  )
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',    
+    padding:20,
+  },
+  tb: {
+      width:"100%",  
+      borderRadius:5,
+      backgroundColor:"#efefef",
+      color:"#333",
+      fontWeight:"bold",
+      paddingHorizontal:10,
+      paddingVertical:15,
+      marginVertical:10,      
+  },
+  btn: {
+      borderWidth:1,
+      borderColor:"#141D21",
+      borderRadius:8,
+      paddingVertical:16,
+      marginVertical:20
+  },
+  btnLabel: {
+      fontSize:16,
+      textAlign:"center"
+  },
+  text: {
+   fontSize:20,
+   textAlign:"center",
+   marginVertical:8,
+  }
+ 
+});
+```
+Result
+
+![alt text](image-17.png)
+
+
+### Full code
+```js
+import { StyleSheet, Text, View, Pressable, TextInput, FlatList} from 'react-native';
+import { useState, useEffect } from "react"
+
+// TODO: import the required service from FirebaseConfig.js
+import { db } from '../firebaseConfig'
+
+// TODO: import the specific functions from the service
+import { collection, query, where, getDocs,  doc, updateDoc } from "firebase/firestore";
+
+// icon
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
+export default StudentListScreen = () => {
+
+   // state variable for the text box
+   const [nameFromUI, setNameFromUI] = useState("")
+
+   // state variable to store students
+   const [studentList, setStudentList] = useState([])
+     
+
+   // 1. retrieve data from database
+   const getData = async (studentName) => {
+      
+       try {          
+           // 2. after retrieving data, save data to a state variable
+           const tempArray = []
+
+           // gets all documents from the "students"
+           // const querySnapshot = await getDocs( collection(db, "students") )
+
+           // get all documents where the gpa >= 2.5
+           //const q = query(collection(db, "students"), where("gpa", ">=", 88));
+           // const q = query(collection(db, "students"), where("isPostGrad", "==", true));
+
+           let querySnapshot = undefined
+           if (studentName === undefined) {
+               // if no value is provided to the parameter, then it will be undefined               
+               querySnapshot = await getDocs(collection(db, "students"));
+           } else {
+               const q = query(collection(db, "students"), where("name", "==", studentName));
+               querySnapshot = await getDocs(q);
+           }
+
+
+           querySnapshot.forEach((currDoc) => {
+               console.log(`Document id: ${currDoc.id}`)
+               console.log("Document data:")
+               console.log(currDoc.data())
+
+               // you cannot use the data as is to populate the flatlist
+               // create a brand new javascript object that contains the info in the document
+
+               const tempObject = {...currDoc.data(), id: currDoc.id}
+               tempArray.push(tempObject)
+           })
+
+           setStudentList([...tempArray])
+
+
+           // 3. when the state variable updates, the list will auto update
+       } catch (err) {
+           console.log(err)
+       }
+   }
+
+   // button click handler
+   const btnGetStudentsPressed = async () => {
+       alert(`Textbox value is: ${nameFromUI}`)
+       getData(nameFromUI)
+   }
+   useEffect(()=>{
+       getData()
+   },[])
+
+   const updatePressed = async (item) => {
+       // JSON.stinrigy wil fix the [object object] output
+       alert(item.id)
+       // update the corresponding in the db
+       await updateDoc(doc(db, "students", item.id), {gpa: -25.555})
+
+       // refresh the user interface
+       getData()
+   }
+
+  return(
+      <View style={styles.container}> 
+         <TextInput placeholder="Enter name" onChangeText={setNameFromUI} text={nameFromUI} style={styles.tb}/>
+         <Pressable style={styles.btn} onPress={btnGetStudentsPressed}>
+              <Text style={styles.btnLabel}>Get from Database</Text>
+         </Pressable>
+        
+         <Text style={styles.text}>Class List</Text>
+         <FlatList
+           data={studentList}
+           keyExtractor={(item)=>{ return item.id }}
+           renderItem={
+                   ({item})=>{
+                       return(
+                           <View>
+                               <Text>Name: {item.name}</Text>
+                               <Text>GPA: {item.gpa}</Text>
+                               <Pressable onPress={()=>{updatePressed(item)}}>
+                                   <FontAwesome5 name="edit" size={24} color="black" />
+                               </Pressable>
+                           </View>
+                       )
+                   }
+               } 
+           ItemSeparatorComponent={
+               ()=>{
+                 return(
+                   <View style={{borderWidth:1, borderColor:"#ccc", marginVertical:4}}></View>
+                 )
+               }
+             }
+
+           />
+     </View>
+
+  )
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',    
+    padding:20,
+  },
+  tb: {
+      width:"100%",  
+      borderRadius:5,
+      backgroundColor:"#efefef",
+      color:"#333",
+      fontWeight:"bold",
+      paddingHorizontal:10,
+      paddingVertical:15,
+      marginVertical:10,      
+  },
+  btn: {
+      borderWidth:1,
+      borderColor:"#141D21",
+      borderRadius:8,
+      paddingVertical:16,
+      marginVertical:20
+  },
+  btnLabel: {
+      fontSize:16,
+      textAlign:"center"
+  },
+  text: {
+   fontSize:20,
+   textAlign:"center",
+   marginVertical:8,
+  }
+ 
+});
+
+ 
+
 
 This completes the process of enabling the screen to access Firestore.
 
@@ -1462,40 +1971,33 @@ const updatePressed = async (item) => {
 ###  Delete A Document
 
 ```js
-import { collection, getDocs, where, query, doc, updateDoc, <span class="mark">deleteDoc</span> } from "firebase/firestore"
+import { collection, getDocs, where, query, doc, updateDoc, deleteDoc} from "firebase/firestore"
 ```
 
 Update the FlatList with a delete button:
-
-| \<Button title="Delete" onPress={()=\>{deletePressed(item)}}/\> |
-|-----------------------------------------------------------------|
+```js
+<Button title="Delete" onPress={()=\>{deletePressed(item)}}/\>
+```
 
 Click handler:
+```js
+const deletePressed = async (item) => {
+       console.log("DEBUG: What document was clicked?")
+       console.log(item)
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th><p>const deletePressed = async (item) =&gt; {</p>
-<p>console.log("DEBUG: What document was clicked?")</p>
-<p>console.log(item)</p>
-<p>try {</p>
-<p>// delete the specified document</p>
-<p>await deleteDoc(doc(db, "students", item.id))</p>
-<p>alert("Done!")</p>
-<p>// query the database again, get all documents and show in list</p>
-<p>getData()</p>
-<p>} catch(err) {</p>
-<p>console.log(err)</p>
-<p>}</p>
-<p>}</p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+       try {
+           // delete the specified document
+           await deleteDoc(doc(db, "students", item.id))
+           alert("Done!")
+
+           // query the database again, get all documents and show in list
+           getData()
+       } catch(err) {
+           console.log(err)
+       }
+}
+
+```
 
 # Firebase Authentication
 
@@ -1504,69 +2006,51 @@ Download:
 <img src="images/media9_2/image7.png"
 style="width:1.77083in;height:0.39583in" />
 
-App.js
+```js
+// App.js
 
-**import** { createNativeStackNavigator } **from**
-'@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-**import** EntryFormScreen **from** './screens/EntryFormScreen';
+import EntryFormScreen from './screens/EntryFormScreen';
+import StudentListScreen from "./screens/StudentListScreen";
+import LoginScreen from "./screens/LoginScreen";
 
-**import** StudentListScreen **from** "./screens/StudentListScreen";
 
-<span class="mark">**import** LoginScreen **from**
-"./screens/LoginScreen";</span>
+const Stack = createNativeStackNavigator();
 
-**const** Stack = createNativeStackNavigator();
+export default function App() {
+ return (
+   <NavigationContainer>
+     <Stack.Navigator>
+       <Stack.Screen name="Login Screen" component={LoginScreen} />
+      
+       <Stack.Screen
+         name="Entry Form"
+         component={EntryFormScreen}
+         options={ ({ navigation }) => ({
+           headerRight: () => (
+             <Button onPress={
+               () => {
+                 navigation.navigate("Student List Screen")
+               }
+             }
+             title="All Students"/>
+           )
+         }) }
+        
+       />
+       <Stack.Screen name="Student List Screen" component={StudentListScreen} />       
 
-**export** **default** **function** App() {
-
-**return** (
-
-\<NavigationContainer\>
-
-\<Stack.Navigator\>
-
-<span class="mark">\<Stack.Screen name="Login Screen"
-component={LoginScreen} /\></span>
-
-\<Stack.Screen
-
-name="Entry Form"
-
-component={EntryFormScreen}
-
-options={ ({ navigation }) **=\>** ({
-
-headerRight: () **=\>** (
-
-\<Button onPress={
-
-() **=\>** {
-
-navigation.navigate("Student List Screen")
-
+      
+      
+     </Stack.Navigator>
+   </NavigationContainer>
+ )
 }
 
-}
+```
+___
 
-title="All Students"/\>
-
-)
-
-}) }
-
-/\>
-
-\<Stack.Screen name="Student List Screen" component={StudentListScreen}
-/\>
-
-\</Stack.Navigator\>
-
-\</NavigationContainer\>
-
-)
-
-}
 
 Firebase Console:
 
@@ -1595,433 +2079,276 @@ style="width:7.82292in;height:5.33333in" />
 
 <img src="images/media9_2/image5.png" style="width:9in;height:2.19444in" />
 
-For simplicity of development, change your login screen to default to
-your user email/password
+For simplicity of development, change your login screen to default to your user email/password
 
-Update your firebase config
+## Update your firebase config
 
+```js
 // Import the functions you need from the SDKs you need
-
-**import** { initializeApp } **from** "firebase/app";
+import { initializeApp } from "firebase/app";
 
 // TODO: Add SDKs for Firebase products that you want to use
-
 // https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"
 
-**import** { getFirestore } **from** "firebase/firestore";
-
-<span class="mark">**import** { getAuth } **from**
-"firebase/auth"</span>
 
 // Your web app's Firebase configuration
-
-**const** firebaseConfig = {
-
-apiKey: "AIzaSyDB5CJcwcueh9DOkBThNOB4w_DsJsXy1Bg",
-
-authDomain: "mytestproject-88d10.firebaseapp.com",
-
-projectId: "mytestproject-88d10",
-
-storageBucket: "mytestproject-88d10.firebasestorage.app",
-
-messagingSenderId: "1090576590935",
-
-appId: "1:1090576590935:web:716b7c54ffe02248d65b12"
-
+const firebaseConfig = {
+ apiKey: "AIzaSyDB5CJcwcueh9DOkBThNOB4w_DsJsXy1Bg",
+ authDomain: "mytestproject-88d10.firebaseapp.com",
+ projectId: "mytestproject-88d10",
+ storageBucket: "mytestproject-88d10.firebasestorage.app",
+ messagingSenderId: "1090576590935",
+ appId: "1:1090576590935:web:716b7c54ffe02248d65b12"
 };
+
 
 // Initialize Firebase
 
-**const** app = initializeApp(firebaseConfig);
-
+const app = initializeApp(firebaseConfig);
 // Initialize Firebase Services (database, auth, etc)
+const db = getFirestore(app);
+const auth = getAuth(app)
 
-**const** db = getFirestore(app);
+export {db, auth}
 
-<span class="mark">**const** auth = getAuth(app)</span>
+```
 
-**export** {db, <span class="mark">auth</span>}
 
-Login the user
+### Login the user
+```js
+const loginPressed = async () => {
+      console.log("Logging in...")    
+     
+      try {
+         await signInWithEmailAndPassword(auth, emailFromUI, passwordFromUI)
+         console.log("DEBUG: LOGIN SUCCESS!")
+         alert("LOGIN SUCCESS!")
+         navigation.navigate("Home")
+      } catch (err) {          
+         console.log("Error when doing login")
+         console.log(`Error code: ${err.code}`)
+         console.log(`Error message: ${err.message}`)
+         setErrorMessageLabel(err.message)
+      } 
+     
+  }
 
-**const** loginPressed = **async** () **=\>** {
+``` 
+## Final code for checking if user is logged in & loggin out
 
-console.log("Logging in...")
+```js
+import { StyleSheet, Text, View, TextInput, TextView, Switch, Pressable} from 'react-native';
+import {useState} from "react"
 
-**try** {
+// 1. TODO: import the required service  (db, auth, etc) from FirebaseConfig.js
+import {auth} from "../firebaseConfig"
 
-**await** signInWithEmailAndPassword(auth, emailFromUI, passwordFromUI)
+// 2. TODO: import the specific functions from the service (import ___ from "firebase/firebase auth)
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-console.log("DEBUG: LOGIN SUCCESS!")
 
-alert("LOGIN SUCCESS!")
+const LoginScreen = ({navigation}) => {
 
-navigation.navigate("Home")
+  // form fields
+  const [emailFromUI, setEmailFromUI] = useState("peter@gmail.om")
+  const [passwordFromUI, setPasswordFromUI] = useState("12345678")
+  const [errorMessageLabel, setErrorMessageLabel] = useState("Error messages go here")
 
-} **catch** (err) {
 
-console.log("Error when doing login")
+  const [isProducerInUI, setIsProducerInUI] = useState(false)
+  const [genreFromUI, setGenreFromUI] = useState("Pop")
+  const [artistFromUI, setArtistFromUI] = useState("Michael Jackson")
 
-console.log(\`Error code: \${err.code}\`)
+  const loginPressed = async () => {
+     console.log("Logging in...")    
 
-console.log(\`Error message: \${err.message}\`)
+     try {
+         await signInWithEmailAndPassword(auth, emailFromUI, passwordFromUI)      
+         alert("LOGIN SUCCESS!")
+         // will give you back some data
+         console(auth.currentUser)
+     } catch (err) {          
+         console.log("Error when doing login")
+         console.log(`Error code: ${err.code}`)
+         console.log(`Error message: ${err.message}`)
+         setErrorMessageLabel(err.message)
+     } 
+  }
 
-setErrorMessageLabel(err.message)
 
+   const checkLoginStatus = () => {
+     // if user is logged in, then this will contain an object
+     // if no one is logged in, then thsi will be null
+     console.log(auth.currentUser)
+   }
+
+   const logoutUser = () => {
+     // code to logout user     
+     auth.signOut()
+     alert("User is logged out!")
+    
+   }
+
+
+  const createAccountPressed = async () => {
+      console.log("Attempting to creating account...")
+      try {              
+           // TODO:
+      } catch (err) {          
+          console.log("Error when creating user")
+          console.log(`Error code: ${err.code}`)
+          console.log(`Error message: ${err.message}`)
+      }        
+  }
+
+ return(
+     <View style={styles.container}>
+          <Text style={styles.heading}>Welcome to Music App!</Text>
+          <Text style={styles.text}>Login or Signup</Text>
+          {/* email tb */}
+          <TextInput placeholder="Enter email" onChangeText={setEmailFromUI} value={emailFromUI} style={styles.tb}/>
+      
+          {/* password tb */}
+          <TextInput placeholder="Enter password" onChangeText={setPasswordFromUI} value={passwordFromUI} style={styles.tb}/>
+
+         {/* other data for the user profile */}
+         <View style={{borderWidth:1, borderColor:"#ccc", padding:8, marginBottom:16}}>
+           <Text style={styles.heading}>Additional Info</Text>           
+           <Text>Are you a music producer?</Text>
+           <Switch onValueChange={setIsProducerInUI} value={isProducerInUI} />
+
+           <Text>Favorite Genre?</Text>
+           <TextInput placeholder="What is your favorite genre?" onChangeText={setGenreFromUI} value={genreFromUI} style={styles.tb}/>
+
+           <Text>Favorite Artist?</Text>
+           <TextInput placeholder="What is your favorite artist?" onChangeText={setArtistFromUI} value={artistFromUI} style={styles.tb}/>
+         </View>
+
+          {/* button */}
+         
+          <Pressable onPress={loginPressed} style={styles.btn}>
+              <Text style={styles.btnLabel}>Login</Text>
+          </Pressable>
+
+          <Pressable onPress={createAccountPressed} style={styles.darkBtn}>
+              <Text style={[styles.btnLabel, {color:"#fff"}]}>Create Account</Text>
+          </Pressable>
+          <Pressable onPress={checkLoginStatus} style={styles.btn}>
+              <Text style={[styles.btnLabel, {color:"#000"}]}>Check for logged in user?</Text>
+          </Pressable>
+          <Pressable onPress={logoutUser} style={styles.btn}>
+              <Text style={[styles.btnLabel, {color:"#000"}]}>Logout?</Text>
+          </Pressable>
+
+          <Text>{errorMessageLabel}</Text>
+     </View>
+ )
 }
-
-}
-
-Final code for checking if user is logged in & loggin out
-
-**import** { StyleSheet, Text, View, TextInput, TextView, Switch,
-Pressable} **from** 'react-native';
-
-**import** {useState} **from** "react"
-
-// 1. TODO: import the required service (db, auth, etc) from
-FirebaseConfig.js
-
-**import** {auth} **from** "../firebaseConfig"
-
-// 2. TODO: import the specific functions from the service (import
-\_\_\_ from "firebase/firebase auth)
-
-**import** {createUserWithEmailAndPassword, signInWithEmailAndPassword }
-**from** "firebase/auth";
-
-**const** LoginScreen = ({navigation}) **=\>** {
-
-// form fields
-
-**const** \[emailFromUI, setEmailFromUI\] = useState("peter@gmail.om")
-
-**const** \[passwordFromUI, setPasswordFromUI\] = useState("12345678")
-
-**const** \[errorMessageLabel, setErrorMessageLabel\] = useState("Error
-messages go here")
-
-**const** \[isProducerInUI, setIsProducerInUI\] = useState(**false**)
-
-**const** \[genreFromUI, setGenreFromUI\] = useState("Pop")
-
-**const** \[artistFromUI, setArtistFromUI\] = useState("Michael
-Jackson")
-
-**const** loginPressed = **async** () **=\>** {
-
-console.log("Logging in...")
-
-**try** {
-
-**await** signInWithEmailAndPassword(auth, emailFromUI, passwordFromUI)
-
-alert("LOGIN SUCCESS!")
-
-// will give you back some data
-
-console(auth.currentUser)
-
-} **catch** (err) {
-
-console.log("Error when doing login")
-
-console.log(\`Error code: \${err.code}\`)
-
-console.log(\`Error message: \${err.message}\`)
-
-setErrorMessageLabel(err.message)
-
-}
-
-}
-
-**const** checkLoginStatus = () **=\>** {
-
-// if user is logged in, then this will contain an object
-
-// if no one is logged in, then thsi will be null
-
-console.log(auth.currentUser)
-
-}
-
-**const** logoutUser = () **=\>** {
-
-// code to logout user
-
-auth.signOut()
-
-alert("User is logged out!")
-
-}
-
-**const** createAccountPressed = **async** () **=\>** {
-
-console.log("Attempting to creating account...")
-
-**try** {
-
-// TODO:
-
-} **catch** (err) {
-
-console.log("Error when creating user")
-
-console.log(\`Error code: \${err.code}\`)
-
-console.log(\`Error message: \${err.message}\`)
-
-}
-
-}
-
-**return**(
-
-\<View style={styles.container}\>
-
-\<Text style={styles.heading}\>Welcome to Music App!\</Text\>
-
-\<Text style={styles.text}\>Login or Signup\</Text\>
-
-{/\* email tb \*/}
-
-\<TextInput placeholder="Enter email" onChangeText={setEmailFromUI}
-value={emailFromUI} style={styles.tb}/\>
-
-{/\* password tb \*/}
-
-\<TextInput placeholder="Enter password"
-onChangeText={setPasswordFromUI} value={passwordFromUI}
-style={styles.tb}/\>
-
-{/\* other data for the user profile \*/}
-
-\<View style={{borderWidth:1, borderColor:"#ccc", padding:8,
-marginBottom:16}}\>
-
-\<Text style={styles.heading}\>Additional Info\</Text\>
-
-\<Text\>Are you a music producer?\</Text\>
-
-\<Switch onValueChange={setIsProducerInUI} value={isProducerInUI} /\>
-
-\<Text\>Favorite Genre?\</Text\>
-
-\<TextInput placeholder="What is your favorite genre?"
-onChangeText={setGenreFromUI} value={genreFromUI} style={styles.tb}/\>
-
-\<Text\>Favorite Artist?\</Text\>
-
-\<TextInput placeholder="What is your favorite artist?"
-onChangeText={setArtistFromUI} value={artistFromUI} style={styles.tb}/\>
-
-\</View\>
-
-{/\* button \*/}
-
-\<Pressable onPress={loginPressed} style={styles.btn}\>
-
-\<Text style={styles.btnLabel}\>Login\</Text\>
-
-\</Pressable\>
-
-\<Pressable onPress={createAccountPressed} style={styles.darkBtn}\>
-
-\<Text style={\[styles.btnLabel, {color:"#fff"}\]}\>Create
-Account\</Text\>
-
-\</Pressable\>
-
-\<Pressable onPress={checkLoginStatus} style={styles.btn}\>
-
-\<Text style={\[styles.btnLabel, {color:"#000"}\]}\>Check for logged in
-user?\</Text\>
-
-\</Pressable\>
-
-\<Pressable onPress={logoutUser} style={styles.btn}\>
-
-\<Text style={\[styles.btnLabel, {color:"#000"}\]}\>Logout?\</Text\>
-
-\</Pressable\>
-
-\<Text\>{errorMessageLabel}\</Text\>
-
-\</View\>
-
-)
-
-}
-
-**export** **default** LoginScreen
-
-**const** styles = StyleSheet.create({
-
-container: {
-
-flex: 1,
-
-backgroundColor: '#fff',
-
-padding:20,
-
-},
-
-tb: {
-
-width:"100%",
-
-borderRadius:5,
-
-backgroundColor:"#efefef",
-
-color:"#333",
-
-fontWeight:"bold",
-
-paddingHorizontal:10,
-
-paddingVertical:15,
-
-marginVertical:10,
-
-},
-
-btn: {
-
-borderWidth:1,
-
-borderColor:"#141D21",
-
-borderRadius:8,
-
-paddingVertical:8,
-
-marginVertical:8
-
-},
-
-darkBtn: {
-
-borderWidth:1,
-
-backgroundColor:"#000",
-
-borderRadius:8,
-
-paddingVertical:16,
-
-marginVertical:8
-
-},
-
-btnLabel: {
-
-fontSize:16,
-
-textAlign:"center"
-
-},
-
-error: {
-
-fontSize:16,
-
-textAlign:"center",
-
-color:"blue"
-
-},
-
-heading : {
-
-fontSize:20,
-
-textAlign:"center",
-
-},
-
-text : {
-
-fontSize:18,
-
-marginVertical:8,
-
-}
-
+export default LoginScreen
+
+
+const styles = StyleSheet.create({
+ container: {
+   flex: 1,
+   backgroundColor: '#fff',   
+   padding:20,
+ },
+ tb: {
+     width:"100%", 
+     borderRadius:5,
+     backgroundColor:"#efefef",
+     color:"#333",
+     fontWeight:"bold",
+     paddingHorizontal:10,
+     paddingVertical:15,
+     marginVertical:10,     
+ },
+ btn: {
+     borderWidth:1,
+     borderColor:"#141D21",
+     borderRadius:8,
+     paddingVertical:8,
+     marginVertical:8
+ },
+ darkBtn: {
+   borderWidth:1,
+   backgroundColor:"#000",   
+   borderRadius:8,
+   paddingVertical:16,
+   marginVertical:8
+ },
+ btnLabel: {
+     fontSize:16,
+     textAlign:"center"
+ },
+ error: {
+      fontSize:16,
+      textAlign:"center",
+      color:"blue"
+ },
+ heading : {
+   fontSize:20,
+   textAlign:"center",
+ },
+ text : {
+   fontSize:18,
+   marginVertical:8,
+ }
 });
 
-Exercise: If the user is already logged in, then the next time they come
-to the application, skip the login screen, and send them directly to the
-Student List Screen
+```
 
-useEffect(()**=\>**{
 
-**if** (auth.currentUser === **null**) {
+### Exercise:  If the user is already logged in, then the next time they come to the application, skip the login screen, and send them directly to the Student List Screen
 
-// no one is logged in
+```js
+useEffect(()=>{
+   if (auth.currentUser === null) {
+       // no one is logged in
+       // do nothing
+   } else {
+       // send them to the next screen
+       navigate.navigate("Student List Screen")
+   }
 
-// do nothing
+},[])
 
-} **else** {
-
-// send them to the next screen
-
-navigate.navigate("Student List Screen")
-
-}
-
-},\[\])
-
-Debug this, this untest
-
+```
+Debug this, this untest 
 Create account
+```js
+const createAccountPressed = async () => {
+      console.log("Creating account...")
+      try {              
+           // todo: write the code to create a user account
+           // 1. attempt to create the account with the given email/password
+           const userCredential
+             = await createUserWithEmailAndPassword(auth, emailFromUI, passwordFromUI)
 
-**const** createAccountPressed = **async** () **=\>** {
+          // 2. if successful, then a copy of the account information will be store din the
+          // userCredential variable
+          console.log(userCredential)
 
-console.log("Creating account...")
+          alert("Account created! Check Website!")
 
-**try** {
+          // 3. what is the email address of the created account
+          console.log(`Email of account: ${userCredential.user.email}`)
+          console.log(`Firebase uid for this account: ${userCredential.user.uid}`)
 
-// todo: write the code to create a user account
+         // 4. navigate you to the next screen of the app
+         // navigation.navigate("Home")
 
-// 1. attempt to create the account with the given email/password
 
-**const** userCredential
+      } catch (err) {          
+          console.log("Error when creating user")
+          console.log(`Error code: ${err.code}`)
+          console.log(`Error message: ${err.message}`)
+      }        
+  }
 
-= **await** createUserWithEmailAndPassword(auth, emailFromUI,
-passwordFromUI)
+```
 
-// 2. if successful, then a copy of the account information will be
-store din the
 
-// userCredential variable
 
-console.log(userCredential)
-
-alert("Account created! Check Website!")
-
-// 3. what is the email address of the created account
-
-console.log(\`Email of account: \${userCredential.user.email}\`)
-
-console.log(\`Firebase uid for this account:
-\${userCredential.user.uid}\`)
-
-// 4. navigate you to the next screen of the app
-
-// navigation.navigate("Home")
-
-} **catch** (err) {
-
-console.log("Error when creating user")
-
-console.log(\`Error code: \${err.code}\`)
-
-console.log(\`Error message: \${err.message}\`)
-
-}
-
-}

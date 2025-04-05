@@ -1,26 +1,32 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+// Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// 1. import the firestore service
+// import the firestore service
 import { getFirestore } from "firebase/firestore";
+
+// import the Firebase auth service
 import { getAuth } from "firebase/auth"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA3tNHGmO6K-GfXOq4PaYgb0Jz_-uyrULY",
-  authDomain: "w25project-e6fa1.firebaseapp.com",
-  projectId: "w25project-e6fa1",
-  storageBucket: "w25project-e6fa1.firebasestorage.app",
-  messagingSenderId: "275921266199",
-  appId: "1:275921266199:web:99621398efd48d7f9b1e52"
+  apiKey: "AIzaSyBxA3Jzoy6NsYtnrLjOtW28K-2PML2gb98",
+  authDomain: "btp610-w9-data-persistence.firebaseapp.com",
+  projectId: "btp610-w9-data-persistence",
+  storageBucket: "btp610-w9-data-persistence.firebasestorage.app",
+  messagingSenderId: "794778438520",
+  appId: "1:794778438520:web:3925e0db725af819e1568d"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// 2. initialize Firestore service
-const db = getFirestore(app)    //  initializing the database service
-const auth = getAuth()        // initialize the authentication service
+// initialize Firestore (db) service
+const db = getFirestore(app)
 
-// 3. export the Firestore service from this js file so other parts of your app can use it
-export { db , auth }
+// initialize Firebase auth service
+const auth = getAuth(app)
+
+// export the Firestore service from this js file so other parts of your app can use it
+export { db, auth }

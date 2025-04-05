@@ -11,8 +11,8 @@ import {createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fireb
 const LoginScreen = ({navigation}) => {
 
    // form fields
-   const [emailFromUI, setEmailFromUI] = useState("peter@gmail.com")
-   const [passwordFromUI, setPasswordFromUI] = useState("00001111")
+   const [emailFromUI, setEmailFromUI] = useState("bryce.seefieldt@gmail.com")
+   const [passwordFromUI, setPasswordFromUI] = useState("123456")
    const [errorMessageLabel, setErrorMessageLabel] = useState("Error messages go here")
 
 

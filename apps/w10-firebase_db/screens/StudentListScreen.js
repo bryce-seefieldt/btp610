@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Pressable, TextInput, FlatList} from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput, FlatList, Button} from 'react-native';
 import { useState, useEffect } from "react"
 
 // TODO: import the required service from FirebaseConfig.js
 import { db } from '../firebaseConfig'
 
 // TODO: import the specific functions from the service
-import { collection, query, where, getDocs,  doc, updateDoc } from "firebase/firestore";
+import { collection, query, where, getDocs,  doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // icon
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -74,14 +74,47 @@ export default StudentListScreen = () => {
    },[])
 
    const updatePressed = async (item) => {
-       // JSON.stinrigy wil fix the [object object] output
-       alert(item.id)
-       // update the corresponding in the db
-       await updateDoc(doc(db, "students", item.id), {gpa: -25.555})
+       // JSON.stringify will fix the [object object] output
+       console.log("DEBUG: What document was clicked?")
+       console.log(item)
 
-       // refresh the user interface
-       getData()
+       // check what their new post grad status should be
+       let updatedStatus = undefined           // undefined = create the variable but do not set an initial value
+       if (item.isPostGrad === true) {
+           updatedStatus = false
+       } else {
+           updatedStatus = true
+       }
+
+       try {
+           // update the corresponding in the db
+           await updateDoc(doc(db, "students", item.id), {
+               gpa: 4.0, 
+               isPostGrad: updatedStatus
+           })
+           alert("Done!")
+           
+           // refresh the user interface
+           getData()
+       } catch (err) {
+           console.log(err)
+       }
    }
+   const deletePressed = async (item) => {
+    console.log("DEBUG: What document was clicked?")
+    console.log(item)
+
+    try {
+        // delete the specified document
+        await deleteDoc(doc(db, "students", item.id))
+        alert(`${item.name} was deleted`)
+
+        // query the database again, get all documents and show in list
+        getData()
+    } catch(err) {
+        console.log(err)
+    }
+}
 
   return(
       <View style={styles.container}> 
@@ -100,6 +133,8 @@ export default StudentListScreen = () => {
                            <View>
                                <Text>Name: {item.name}</Text>
                                <Text>GPA: {item.gpa}</Text>
+                               <Text>Post Grad: {item.isPostGrad ? "Yes" : "No"}</Text>
+                               <Button title="Delete" onPress={()=>{deletePressed(item)}}/>
                                <Pressable onPress={()=>{updatePressed(item)}}>
                                    <FontAwesome5 name="edit" size={24} color="black" />
                                </Pressable>

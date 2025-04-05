@@ -35,7 +35,7 @@ style="width:4.65405in;height:3.68984in" />
 
 - Set the document id to match the person’s Firebase Auth UID
 
-# <img src="images/media/image3.png"
+<img src="images/media/image3.png"
 style="width:5.1437in;height:3.76252in" /> 
 
 # How to create a User Profile
