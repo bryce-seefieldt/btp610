@@ -5,6 +5,14 @@
 - [Hamzah](https://github.com/)
 - [Rahul](https://github.com/)
 
+### Notes
+#### Collaborative Contribution (Team Coding)
+
+- Use `npx expo install --fix` to update the dependencies to the latest version.
+
+- Updates to version should be agreed on by whole group and tagged with a new version number and a new commit.
+- Version changes to `package.json` are not reflected in the apps until the app is rebuilt.
+
 
 ### TODO:
 
@@ -24,8 +32,6 @@ In this project, you will build a clone of the Turo app. Turo is a marketplace f
 - Both apps must provide a way for the user to logout.
 - The account system must be able to distinguish between users who are owners versus users.
 - For simplicity, do NOT implement user account signup screens. Instead, FOR INITIAL TESTING WE WILL manually create the user using the Firebase Authentication Console (website)
-
-
 
 
 ## Problem Description
